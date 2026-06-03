@@ -244,6 +244,14 @@ a { color: inherit; text-decoration: none; }
   0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 156, 0.6); }
   50% { box-shadow: 0 0 0 6px rgba(0, 255, 156, 0); }
 }
+.status-dot.unavail {
+  background: #f59e0b;
+  animation: pulse-amber 2s ease-in-out infinite;
+}
+@keyframes pulse-amber {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
+  50% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+}
 
 .hero-grid {
   display: grid;
@@ -1327,9 +1335,9 @@ footer.foot {
   <div class="wrap">
     <div class="hero-top">
       <span class="status">
-        <span class="status-dot"></span>
-        <span data-lang="en">Available · Q2 / Q3 2026</span>
-        <span data-lang="de">Verfügbar · Q2 / Q3 2026</span>
+        <span class="status-dot unavail"></span>
+        <span data-lang="en">Booked through Q3 2026 · Available Q4</span>
+        <span data-lang="de">Ausgebucht bis Q3 2026 · Ab Q4 verfügbar</span>
       </span>
       <span>
         <span data-lang="en">Karlsruhe, DE · Remote-friendly</span>
@@ -1340,8 +1348,8 @@ footer.foot {
     <div class="hero-grid">
       <div>
         <div class="hero-tagline reveal">
-          <span data-lang="en">Applied AI Architecture · MLOps · eCommerce AI</span>
-          <span data-lang="de">Angewandte KI-Architektur · MLOps · eCommerce-KI</span>
+          <span data-lang="en">AI Architecture · MLOps · Agentic Engineering · Search · RecSys</span>
+          <span data-lang="de">KI-Architektur · MLOps · Agentic Engineering · Search · RecSys</span>
         </div>
 
         <h1 class="hero-title reveal">
@@ -1390,7 +1398,7 @@ footer.foot {
           <span class="term-line"><span class="term-key">focus</span>:       <span class="term-val">AI architecture, MLOps</span></span>
           <span class="term-line"><span class="term-key">sectors</span>:     <span class="term-val">eCommerce, SaaS</span></span>
           <span class="term-line"><span class="term-key">based</span>:       <span class="term-val">Karlsruhe, DE</span></span>
-          <span class="term-line"><span class="term-key">status</span>:      <span class="term-val">● accepting briefs</span></span>
+          <span class="term-line"><span class="term-key">status</span>:      <span class="term-val" style="color:#f59e0b">● booked · avail. Q4 2026</span></span>
         </div>
       </aside>
     </div>
@@ -1748,8 +1756,8 @@ footer.foot {
       <div class="stat">
         <div class="stat-num">5–10</div>
         <div class="stat-label">
-          <span data-lang="en">cross-functional<br>team, led</span>
-          <span data-lang="de">cross-funktionales<br>Team geführt</span>
+          <span data-lang="en">cross-functional<br>team, led technical</span>
+          <span data-lang="de">cross-funktionales<br>Team technisch geführt</span>
         </div>
       </div>
     </div>
@@ -1994,11 +2002,11 @@ footer.foot {
       <div>
         <h2 class="block-title">
           <span data-lang="en">Start a <span class="accent">brief</span>.</span>
-          <span data-lang="de">Ein <span class="accent">Briefing</span> schicken.</span>
+          <span data-lang="de">Eine <span class="accent">Projektanfrage</span> schicken.</span>
         </h2>
         <p class="block-lede">
-          <span data-lang="en">Founding engineers, CTOs and product leads wrestling with AI architecture, search, recommenders or MLOps maturity — the first call is a conversation, not a pitch.</span>
-          <span data-lang="de">Gründungs-Engineers, CTOs und Product Leads, die mit KI-Architektur, Suche, Empfehlungssystemen oder MLOps-Reife ringen — der erste Call ist ein Gespräch, kein Pitch.</span>
+          <span data-lang="en">Founding engineers, CTOs and product leads wrestling with AI architecture, search, recommenders or MLOps maturity — the first call is a free conversation.</span>
+          <span data-lang="de">Gründungs-Engineers, CTOs und Product Leads, die mit KI-Architektur, Suche, Empfehlungssystemen oder MLOps-Reife ringen: Der erste Call ist ein kostenloses Gespräch.</span>
         </p>
       </div>
     </div>
@@ -2031,7 +2039,7 @@ footer.foot {
 
         <aside class="brief-card">
           <h4 data-lang="en">A good brief contains</h4>
-          <h4 data-lang="de">Ein gutes Briefing enthält</h4>
+          <h4 data-lang="de">Eine gute Anfrage enthält</h4>
           <ul class="brief-list">
             <li data-lang="en">The business outcome you want to move</li>
             <li data-lang="de">Das Ergebnis, das erreicht werden soll</li>
@@ -2046,7 +2054,7 @@ footer.foot {
           </ul>
           <a href="#" class="btn btn-primary email-lnk" data-u="gnitlusnoc" data-d="ed.gnikniht-latigid" data-subject="Consulting brief — digital-thinking" data-body="Hi Christian,%0A%0ABusiness outcome:%0ACurrent stack:%0ATeam:%0ATimeline:%0A%0A" rel="nofollow" style="width: 100%; justify-content: center;">
             <span data-lang="en">Send a brief</span>
-            <span data-lang="de">Briefing senden</span>
+            <span data-lang="de">Anfrage senden</span>
           </a>
         </aside>
       </div>
@@ -2077,7 +2085,7 @@ footer.foot {
       <address>
         Christian Freischlag<br>
         <!-- REPLACE: set data-l1 = street reversed, data-l2 = zip+city reversed -->
-        <span class="obf-addr" data-l1="1 eßartsretsuM" data-l2="ehurslraK 33167"></span><br>
+        <span class="obf-addr" data-l1="05 eßartsnetiZ" data-l2="ehurslraK 58167"></span><br>
         <span data-lang="en">Germany</span><span data-lang="de">Deutschland</span>
       </address>
     </div>
@@ -2094,7 +2102,7 @@ footer.foot {
       </h4>
       <address>
         Christian Freischlag<br>
-        <span class="obf-addr" data-l1="1 eßartsretsuM" data-l2="ehurslraK 33167"></span><br>
+        <span class="obf-addr" data-l1="05 eßartsnetiZ" data-l2="ehurslraK 58167"></span><br>
         <span data-lang="en">Germany</span><span data-lang="de">Deutschland</span>
       </address>
     </div>
