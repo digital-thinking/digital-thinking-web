@@ -2096,6 +2096,11 @@ footer.foot {
     </div>
 
     <div class="modal-section">
+      <h4><span data-lang="en">VAT ID (§ 27a UStG)</span><span data-lang="de">Umsatzsteuer-ID (§ 27a UStG)</span></h4>
+      <p><span class="obf-vat" data-v="287636264ED"></span></p>
+    </div>
+
+    <div class="modal-section">
       <h4>
         <span data-lang="en">Editorial responsibility (§ 55 Abs. 2 MStV)</span>
         <span data-lang="de">Verantwortlich für den Inhalt (§ 55 Abs. 2 MStV)</span>
@@ -2523,6 +2528,11 @@ footer.foot {
         var l1 = rev(el.dataset.l1 || '');
         var l2 = rev(el.dataset.l2 || '');
         el.innerHTML = (l1 ? esc(l1) : '') + (l1 && l2 ? '<br>' : '') + (l2 ? esc(l2) : '');
+        el.dataset.revealed = '1';
+      });
+      overlay.querySelectorAll('.obf-vat').forEach(function (el) {
+        if (el.dataset.revealed === '1') return;
+        el.textContent = rev(el.dataset.v || '');
         el.dataset.revealed = '1';
       });
     }
