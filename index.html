@@ -1,0 +1,2528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>digital-thinking — Applied AI Architecture &amp; MLOps Consulting</title>
+<meta name="description" content="Independent consulting on Applied AI Architecture, MLOps, eCommerce search and recommender systems. Engineer reliable AI systems. Not fragile prototypes." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* =================================================================
+   digital-thinking · Applied AI Architecture & MLOps
+   ================================================================= */
+
+:root {
+  --bg:          #0a0a0a;
+  --bg-2:        #111111;
+  --bg-3:        #161616;
+  --fg:          #ededed;
+  --fg-dim:      #a3a3a3;
+  --fg-mute:     #6b6b6b;
+  --border:      #222222;
+  --border-soft: #1a1a1a;
+
+  --g:           #00ff9c;
+  --g-bright:    #6effc1;
+  --g-deep:      #00b870;
+  --g-tint:      rgba(0, 255, 156, 0.10);
+  --g-tint-2:    rgba(0, 255, 156, 0.04);
+
+  --sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --maxw: 1280px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+}
+
+/* subtle grid backdrop */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: -1px -1px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse at center top, rgba(0,0,0,0.8) 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center top, rgba(0,0,0,0.8) 0%, transparent 70%);
+}
+
+::selection { background: var(--g); color: var(--bg); }
+
+/* ============ LANGUAGE TOGGLE ============ */
+html[lang="en"] [data-lang="de"] { display: none !important; }
+html[lang="de"] [data-lang="en"] { display: none !important; }
+
+/* ============ TYPOGRAPHY ============ */
+h1, h2, h3, h4, h5 {
+  font-family: var(--sans);
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+
+.mono { font-family: var(--mono); font-weight: 400; }
+.upper { text-transform: uppercase; letter-spacing: 0.12em; }
+
+/* ============ LAYOUT ============ */
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1.75rem;
+}
+@media (max-width: 640px) { .wrap { padding: 0 1rem; } }
+
+/* ============ NAV ============ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 10, 10, 0.82);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 0.9rem 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+.brand-mark {
+  width: 22px; height: 22px;
+  color: var(--g);
+  flex-shrink: 0;
+}
+.brand-name { color: var(--fg); }
+.brand-name span { color: var(--g); }
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+.nav-links a {
+  color: var(--fg-dim);
+  transition: color 140ms ease;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+.nav-links a:hover { color: var(--g); }
+.nav-links a .num {
+  color: var(--fg-mute);
+  font-size: 0.72rem;
+}
+.nav-links a:hover .num { color: var(--g); }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.lang-switch {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  overflow: hidden;
+}
+.lang-switch button {
+  background: transparent;
+  color: var(--fg-dim);
+  border: 0;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  letter-spacing: 0.08em;
+  transition: background 140ms ease, color 140ms ease;
+}
+.lang-switch button:hover { color: var(--fg); }
+.lang-switch button.active {
+  background: var(--g);
+  color: var(--bg);
+  font-weight: 600;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--bg);
+  background: var(--g);
+  border: 0;
+  border-radius: 2px;
+  transition: background 160ms ease, transform 160ms ease;
+}
+.cta-btn:hover { background: var(--g-bright); transform: translateY(-1px); }
+.cta-btn::after { content: "→"; }
+
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .nav-inner { grid-template-columns: 1fr auto; }
+}
+@media (max-width: 520px) {
+  .cta-btn { display: none; }
+}
+
+/* ============ HERO ============ */
+.hero {
+  padding: 5rem 0 6rem;
+  position: relative;
+}
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--fg-mute);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.hero-top > span { display: flex; align-items: center; gap: 0.5rem; }
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--g);
+}
+.status-dot {
+  width: 7px; height: 7px;
+  background: var(--g);
+  border-radius: 50%;
+  position: relative;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 156, 0.6); }
+  50% { box-shadow: 0 0 0 6px rgba(0, 255, 156, 0); }
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 4rem;
+  align-items: start;
+}
+
+.hero-tagline {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--g);
+  margin-bottom: 1.75rem;
+  letter-spacing: 0.05em;
+}
+.hero-tagline::before {
+  content: "//  ";
+  color: var(--fg-mute);
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 7.2vw, 5.8rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  margin-bottom: 2rem;
+}
+.hero-title .accent {
+  color: var(--g);
+  font-weight: 600;
+}
+.hero-title .line { display: block; }
+
+.hero-sub {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--fg-dim);
+  max-width: 42em;
+  margin-bottom: 2.5rem;
+}
+.hero-sub strong { color: var(--fg); font-weight: 500; }
+
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  border-radius: 2px;
+  transition: all 180ms ease;
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--g);
+  color: var(--bg);
+  font-weight: 600;
+  border: 1px solid var(--g);
+}
+.btn-primary:hover { background: var(--g-bright); border-color: var(--g-bright); }
+.btn-primary::after { content: "→"; transition: transform 180ms ease; }
+.btn-primary:hover::after { transform: translateX(4px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--g); color: var(--g); }
+
+/* terminal card */
+.term {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+.term-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--bg-3);
+  border-bottom: 1px solid var(--border);
+  color: var(--fg-mute);
+  font-size: 0.72rem;
+}
+.term-dots {
+  display: flex; gap: 0.35rem;
+}
+.term-dots i {
+  width: 10px; height: 10px; border-radius: 50%;
+  display: inline-block;
+}
+.term-dots i:nth-child(1) { background: #ff5f57; }
+.term-dots i:nth-child(2) { background: #febc2e; }
+.term-dots i:nth-child(3) { background: #28c840; }
+.term-title { margin-left: 0.5rem; }
+.term-body {
+  padding: 1rem 1.1rem;
+  color: var(--fg-dim);
+}
+.term-line { display: block; }
+.term-prompt { color: var(--g); }
+.term-comment { color: var(--fg-mute); }
+.term-key { color: var(--fg); }
+.term-val { color: var(--g-bright); }
+.term-cursor {
+  display: inline-block;
+  width: 8px; height: 14px;
+  background: var(--g);
+  vertical-align: -2px;
+  margin-left: 2px;
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+@media (max-width: 880px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero { padding: 3rem 0 4rem; }
+}
+
+/* ============ SECTIONS ============ */
+section.block {
+  padding: 6rem 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+@media (max-width: 640px) { section.block { padding: 3.5rem 0; } }
+
+.block-head {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  align-items: start;
+}
+.block-tag {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--g);
+  letter-spacing: 0.08em;
+  padding-top: 0.5rem;
+}
+.block-tag::before { content: "// "; color: var(--fg-mute); }
+
+.block-title {
+  font-size: clamp(1.75rem, 3.8vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  margin-bottom: 1.25rem;
+}
+.block-title .accent { color: var(--g); }
+.block-lede {
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: var(--fg-dim);
+  max-width: 38em;
+}
+.block-lede strong { color: var(--fg); font-weight: 500; }
+
+@media (max-width: 720px) {
+  .block-head { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2.5rem; }
+}
+
+/* ============ ABOUT ============ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+.about-copy p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--fg-dim);
+  margin-bottom: 1.25rem;
+}
+.about-copy p strong { color: var(--fg); font-weight: 500; }
+.about-copy p em { color: var(--g); font-style: normal; font-weight: 500; }
+
+.quote-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--g);
+  padding: 2rem 1.75rem;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--fg);
+  position: relative;
+}
+.quote-card::before {
+  content: "# philosophy.md";
+  position: absolute;
+  top: -0.7rem; left: 1rem;
+  background: var(--bg);
+  padding: 0 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--fg-mute);
+}
+.q-line {
+  display: block;
+  margin-bottom: 0.55rem;
+}
+.q-line.strike {
+  color: var(--fg-mute);
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 90, 90, 0.6);
+}
+.q-line.go { color: var(--g); }
+.q-line.go::before { content: "+ "; }
+.q-line.strike::before { content: "- "; }
+
+@media (max-width: 880px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ============ SERVICES ============ */
+.services {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.service {
+  padding: 2.25rem 2rem;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: background 240ms ease;
+}
+.service:nth-child(2n) { border-right: 0; }
+.service:nth-last-child(-n+2) { border-bottom: 0; }
+.service:hover { background: var(--bg-2); }
+.service::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--g);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.service:hover::before { transform: scaleX(1); }
+
+/* 5th card spans full width as a feature row */
+.service-wide {
+  grid-column: 1 / -1;
+  border-right: 0 !important;
+}
+
+.service-new {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  color: var(--g);
+  background: var(--g-tint);
+  border: 1px solid var(--g-deep);
+  padding: 0.18rem 0.5rem;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.service-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+.service-num {
+  color: var(--g);
+  letter-spacing: 0.05em;
+}
+.service-kind {
+  color: var(--fg-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.service-title {
+  font-size: 1.45rem;
+  font-weight: 500;
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.02em;
+}
+.service-desc {
+  color: var(--fg-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--border);
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  padding: 0.3rem 0.55rem;
+  background: var(--bg-3);
+  color: var(--fg-dim);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  letter-spacing: 0.02em;
+}
+.tag.live {
+  border-color: var(--g-deep);
+  color: var(--g);
+  background: var(--g-tint-2);
+}
+
+@media (max-width: 880px) {
+  .services { grid-template-columns: 1fr; }
+  .service { border-right: 0 !important; border-bottom: 1px solid var(--border) !important; padding: 1.75rem 1.5rem; }
+  .service:last-child { border-bottom: 0 !important; }
+}
+
+/* ============ WORK ============ */
+.work-list {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.work-row {
+  display: grid;
+  grid-template-columns: 120px 1.2fr 2fr auto;
+  gap: 2rem;
+  padding: 1.75rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+  transition: background 180ms ease;
+  background: var(--bg);
+}
+.work-row:last-child { border-bottom: 0; }
+.work-row:hover { background: var(--bg-2); }
+.work-row:hover .work-arrow { color: var(--g); transform: translateX(4px); }
+
+.work-year {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--fg-mute);
+  letter-spacing: 0.04em;
+  padding-top: 0.15rem;
+}
+.work-year .now { color: var(--g); }
+
+.work-client {
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.25rem;
+}
+.work-location {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--fg-mute);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.work-role {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--fg);
+  margin-bottom: 0.35rem;
+}
+.work-role .pill {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--g);
+  border: 1px solid var(--g-deep);
+  padding: 0.1rem 0.45rem;
+  border-radius: 2px;
+  margin-left: 0.5rem;
+  letter-spacing: 0.05em;
+  vertical-align: middle;
+}
+.work-note {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+.work-note em { color: var(--g); font-style: normal; font-weight: 500; }
+
+/* Richer work-note: labelled subsections */
+.work-note .subnote {
+  margin-top: 0.9rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--border);
+}
+.work-note .subnote:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.work-note .sub-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--g);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.work-note .sub-label::before { content: "▸ "; color: var(--fg-mute); }
+.work-arrow {
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  color: var(--fg-mute);
+  transition: color 180ms ease, transform 180ms ease;
+  padding-top: 0.2rem;
+}
+
+@media (max-width: 880px) {
+  .work-row { grid-template-columns: 1fr; gap: 0.65rem; padding: 1.5rem 1.25rem; }
+  .work-arrow { display: none; }
+}
+
+/* ============ STATS ============ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 3rem;
+}
+.stat {
+  padding: 1.75rem 1.5rem;
+  border-right: 1px solid var(--border);
+  background: var(--bg-2);
+}
+.stat:last-child { border-right: 0; }
+.stat:last-child { border-right: 0; }
+.stat-num {
+  font-family: var(--sans);
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: var(--g);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.stat-num .u { font-size: 0.55em; vertical-align: super; color: var(--g-deep); }
+.stat-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--fg-dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+@media (max-width: 700px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stat:nth-child(2) { border-right: 0; }
+  .stat:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+  .stat-num { font-size: 1.9rem; }
+}
+
+/* ============ STACK ============ */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+.stack-col h4 {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--g);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+.stack-col h4::before { content: "▸ "; color: var(--fg-mute); }
+.stack-col ul {
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.stack-col li {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--fg-dim);
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--border-soft);
+}
+.stack-col li:last-child { border-bottom: 0; }
+@media (max-width: 880px) { .stack-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .stack-grid { grid-template-columns: 1fr; } }
+
+/* ============ CREDENTIALS ============ */
+.creds-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.25rem;
+  margin-top: 4.5rem;
+}
+.cred-col h4 {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--g);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+.cred-item {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.cred-item:last-child { border-bottom: 0; }
+.cred-title {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--fg);
+  margin-bottom: 0.15rem;
+  line-height: 1.3;
+}
+.cred-meta {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--fg-mute);
+  letter-spacing: 0.03em;
+}
+@media (max-width: 880px) { .creds-grid { grid-template-columns: 1fr; } }
+
+/* ============ CONTACT ============ */
+.contact-box {
+  background: linear-gradient(180deg, var(--bg-2), var(--bg));
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.contact-box::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--g), transparent);
+  opacity: 0.7;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.contact-head {
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+  line-height: 1.25;
+}
+.contact-head .accent { color: var(--g); }
+.contact-copy {
+  color: var(--fg-dim);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+.channel {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border-soft);
+  align-items: baseline;
+}
+.channel:last-child { border-bottom: 0; }
+.channel-k {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--fg-mute);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.channel-v {
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  color: var(--fg);
+}
+.channel-v a { color: var(--fg); border-bottom: 1px solid var(--border); transition: all 150ms ease; }
+.channel-v a:hover { color: var(--g); border-bottom-color: var(--g); }
+
+.brief-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+  border-radius: 3px;
+}
+.brief-card h4 {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--g);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.brief-card h4::before { content: "$ "; color: var(--fg-mute); }
+.brief-list {
+  list-style: none;
+  margin: 0 0 1.5rem; padding: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.brief-list li {
+  padding: 0.4rem 0 0.4rem 1.25rem;
+  color: var(--fg-dim);
+  position: relative;
+  border-bottom: 1px dashed var(--border-soft);
+}
+.brief-list li:last-child { border-bottom: 0; }
+.brief-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--g);
+  font-size: 0.8rem;
+}
+@media (max-width: 880px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .contact-box { padding: 2rem 1.5rem; }
+}
+
+/* ============ WRITING / BLOG ============ */
+.posts-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.post-filter-btns {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.post-filter-btns button {
+  background: transparent;
+  color: var(--fg-dim);
+  border: 0;
+  padding: 0.5rem 0.95rem;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  cursor: pointer;
+  border-right: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 150ms ease, color 150ms ease;
+  letter-spacing: 0.02em;
+}
+.post-filter-btns button:last-child { border-right: 0; }
+.post-filter-btns button:hover { color: var(--fg); background: var(--bg-2); }
+.post-filter-btns button.active {
+  background: var(--g);
+  color: var(--bg);
+  font-weight: 600;
+}
+.post-filter-btns .count {
+  font-size: 0.66rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  min-width: 1.2rem;
+  text-align: center;
+  opacity: 0.8;
+}
+.post-filter-btns button.active .count {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.posts-links {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  flex-wrap: wrap;
+}
+.posts-links a {
+  color: var(--fg-dim);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+.posts-links a:hover { color: var(--g); border-bottom-color: var(--g); }
+.posts-links a[hidden] { display: none !important; }
+
+.posts-container { position: relative; min-height: 180px; }
+
+.posts-loading {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--fg-mute);
+  font-family: var(--mono);
+  font-size: 0.88rem;
+}
+.posts-loading .term-prompt { margin-right: 0.5rem; color: var(--g); }
+
+.posts-setup, .posts-error, .posts-empty {
+  padding: 2.5rem 1.75rem;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  background: var(--bg-2);
+}
+.posts-setup h4, .posts-error h4 {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--g);
+  margin-bottom: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+.posts-setup h4::before, .posts-error h4::before {
+  content: "// ";
+  color: var(--fg-mute);
+}
+.posts-setup p, .posts-error p {
+  color: var(--fg-dim);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  max-width: 52em;
+  margin: 0 0 0.85rem;
+}
+.posts-setup p:last-child, .posts-error p:last-child { margin-bottom: 0; }
+.posts-setup code, .posts-error code {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  background: var(--bg);
+  color: var(--g);
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+}
+.posts-empty {
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  color: var(--fg-mute);
+}
+
+.posts-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 760px) {
+  .posts-list { grid-template-columns: 1fr; }
+  .posts-controls { flex-direction: column; align-items: stretch; }
+  .post-filter-btns { justify-content: center; }
+}
+
+.post-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.5rem 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+  text-decoration: none;
+  color: inherit;
+  min-height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+.post-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px;
+  height: 0;
+  background: var(--g);
+  transition: height 300ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.post-card:hover {
+  background: var(--bg-3);
+  border-color: #2a2a2a;
+  transform: translateY(-1px);
+}
+.post-card:hover::before { height: 100%; }
+.post-card:hover .post-title { color: var(--g); }
+.post-card:hover .post-link { color: var(--g); }
+.post-card:hover .post-link::after { transform: translateX(4px); }
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--fg-mute);
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.post-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--bg);
+  color: var(--fg-dim);
+  letter-spacing: 0.04em;
+  font-size: 0.68rem;
+}
+.post-source::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--g);
+}
+.post-source[data-src="substack"]::before {
+  background: transparent;
+  border: 1px solid var(--g);
+}
+.post-date { color: var(--fg-mute); }
+.post-read { color: var(--fg-mute); margin-left: auto; }
+
+.post-title {
+  font-size: 1.12rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.75rem;
+  color: var(--fg);
+  transition: color 180ms ease;
+}
+
+.post-excerpt {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--fg-dim);
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.post-link {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--fg-dim);
+  margin-top: auto;
+  transition: color 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: flex-start;
+}
+.post-link::after {
+  content: "→";
+  transition: transform 180ms ease;
+  display: inline-block;
+}
+
+/* ============ FOOTER ============ */
+footer.foot {
+  padding: 3rem 0 2.5rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--fg-mute);
+}
+.foot-grid {
+  display: grid;
+  grid-template-columns: 1.3fr repeat(3, 1fr);
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+.foot h5 {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 0.72rem;
+  color: var(--g);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.foot p, .foot a { display: block; padding: 0.2rem 0; color: var(--fg-dim); }
+.foot a { transition: color 150ms; }
+.foot a:hover { color: var(--g); }
+.foot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+.foot-bottom .legal { display: flex; gap: 1.5rem; }
+@media (max-width: 760px) {
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .foot-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+}
+
+/* ============ REVEAL ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .status-dot, .term-cursor { animation: none; }
+}
+
+/* ============ IMPRESSUM MODAL ============ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 4rem 1.75rem 3rem;
+  overflow-y: auto;
+}
+.modal-overlay[hidden] { display: none !important; }
+
+.modal-box {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  max-width: 680px;
+  width: 100%;
+  padding: 2.5rem 2.75rem;
+  position: relative;
+  animation: modal-in 250ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.25rem; right: 1.25rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg-dim);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: color 140ms ease, border-color 140ms ease;
+  letter-spacing: 0.04em;
+}
+.modal-close:hover { color: var(--g); border-color: var(--g); }
+
+.modal-title {
+  font-size: 1.85rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.35rem;
+  line-height: 1.05;
+}
+.modal-subtitle {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--fg-mute);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.modal-section {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+.modal-section:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+
+.modal-section h4 {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--g);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+.modal-section h4::before { content: "// "; color: var(--fg-mute); }
+
+.modal-section address,
+.modal-section p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--fg-dim);
+  font-style: normal;
+  margin-bottom: 0.5rem;
+}
+.modal-section p:last-child { margin-bottom: 0; }
+
+.modal-section a {
+  color: var(--fg-dim);
+  border-bottom: 1px solid var(--border);
+  transition: color 150ms ease, border-color 150ms ease;
+}
+.modal-section a:hover { color: var(--g); border-bottom-color: var(--g); }
+
+@media (max-width: 640px) {
+  .modal-overlay { padding: 2rem 1rem; }
+  .modal-box { padding: 1.75rem 1.5rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand" aria-label="digital-thinking home">
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <path d="M4 6 L9 12 L4 18" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 19 L20 19" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-name">digital-<span>thinking</span></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#about"><span class="num">01</span><span data-lang="en">About</span><span data-lang="de">Über</span></a>
+      <a href="#services"><span class="num">02</span><span data-lang="en">Services</span><span data-lang="de">Leistungen</span></a>
+      <a href="#work"><span class="num">03</span><span data-lang="en">Work</span><span data-lang="de">Referenzen</span></a>
+      <a href="#writing"><span class="num">04</span><span data-lang="en">Writing</span><span data-lang="de">Texte</span></a>
+      <a href="#stack"><span class="num">05</span><span data-lang="en">Stack</span><span data-lang="de">Stack</span></a>
+      <a href="#contact"><span class="num">06</span><span data-lang="en">Contact</span><span data-lang="de">Kontakt</span></a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-setlang="en" class="active">EN</button>
+        <button type="button" data-setlang="de">DE</button>
+      </div>
+      <a href="#contact" class="cta-btn">
+        <span data-lang="en">Get in touch</span>
+        <span data-lang="de">Kontakt</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <span class="status">
+        <span class="status-dot"></span>
+        <span data-lang="en">Available · Q2 / Q3 2026</span>
+        <span data-lang="de">Verfügbar · Q2 / Q3 2026</span>
+      </span>
+      <span>
+        <span data-lang="en">Karlsruhe, DE · Remote-friendly</span>
+        <span data-lang="de">Karlsruhe, DE · Remote möglich</span>
+      </span>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <div class="hero-tagline reveal">
+          <span data-lang="en">Applied AI Architecture · MLOps · eCommerce AI</span>
+          <span data-lang="de">Angewandte KI-Architektur · MLOps · eCommerce-KI</span>
+        </div>
+
+        <h1 class="hero-title reveal">
+          <span data-lang="en">
+            <span class="line">Engineer <span class="accent">reliable</span></span>
+            <span class="line">AI systems.</span>
+            <span class="line">Not fragile prototypes.</span>
+          </span>
+          <span data-lang="de">
+            <span class="line">Ich baue <span class="accent">zuverlässige</span></span>
+            <span class="line">KI-Systeme.</span>
+            <span class="line">Keine fragilen Prototypen.</span>
+          </span>
+        </h1>
+
+        <p class="hero-sub reveal">
+          <span data-lang="en">I'm <strong>Christian Freischlag</strong>, a Machine Learning Engineer with a decade of experience. I help <strong>startups and scaling brands</strong> move AI from proof-of-concept to production — with the architecture, MLOps discipline and observability to hold up under real traffic, real budgets, and real failure modes. I also advise engineering teams on <strong>agentic coding workflows</strong> — wiring tools like Claude Code, Cursor and custom agents into CI, PR review and QA so they deliver real velocity, not hype.</span>
+          <span data-lang="de">Ich bin <strong>Christian Freischlag</strong>, Machine Learning Engineer mit über zehn Jahren Erfahrung. Ich unterstütze <strong>Startups und wachsende Unternehmen</strong> dabei, KI aus dem Proof-of-Concept in den Produktionsbetrieb zu bringen — mit Architektur, MLOps-Disziplin und Observability, die unter realem Traffic, realen Budgets und realen Fehlerfällen bestehen. Außerdem berate ich Engineering-Teams zu <strong>agentischen Coding-Workflows</strong> — wie Werkzeuge wie Claude Code, Cursor und eigene Agents in CI, PR-Review und QA eingebunden werden, damit sie spürbar Tempo bringen statt nur Hype.</span>
+        </p>
+
+        <div class="hero-actions reveal">
+          <a href="#contact" class="btn btn-primary">
+            <span data-lang="en">Start an engagement</span>
+            <span data-lang="de">Projekt anfragen</span>
+          </a>
+          <a href="#services" class="btn btn-ghost">
+            <span data-lang="en">See services</span>
+            <span data-lang="de">Leistungen ansehen</span>
+          </a>
+        </div>
+      </div>
+
+      <aside class="term reveal" aria-label="System info">
+        <div class="term-head">
+          <div class="term-dots"><i></i><i></i><i></i></div>
+          <span class="term-title">~/digital-thinking · zsh</span>
+        </div>
+        <div class="term-body">
+          <span class="term-line"><span class="term-prompt">$</span> whoami <span class="term-cursor"></span></span>
+          <span class="term-line term-comment"># Christian Freischlag</span>
+          <span class="term-line">&nbsp;</span>
+          <span class="term-line"><span class="term-prompt">$</span> cat profile.yml</span>
+          <span class="term-line"><span class="term-key">name</span>:        <span class="term-val">Christian Freischlag</span></span>
+          <span class="term-line"><span class="term-key">role</span>:        <span class="term-val">ML Engineer &amp; Consultant</span></span>
+          <span class="term-line"><span class="term-key">experience</span>:  <span class="term-val">10+ yrs production ML</span></span>
+          <span class="term-line"><span class="term-key">focus</span>:       <span class="term-val">AI architecture, MLOps</span></span>
+          <span class="term-line"><span class="term-key">sectors</span>:     <span class="term-val">eCommerce, SaaS</span></span>
+          <span class="term-line"><span class="term-key">based</span>:       <span class="term-val">Karlsruhe, DE</span></span>
+          <span class="term-line"><span class="term-key">status</span>:      <span class="term-val">● accepting briefs</span></span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="block" id="about">
+  <div class="wrap">
+    <div class="block-head reveal">
+      <div class="block-tag">01 / About</div>
+      <div>
+        <h2 class="block-title">
+          <span data-lang="en">Bridging research and <span class="accent">resilient software</span>.</span>
+          <span data-lang="de">Die Brücke zwischen Forschung und <span class="accent">belastbarer Software</span>.</span>
+        </h2>
+        <p class="block-lede">
+          <span data-lang="en">I'm a Machine Learning Engineer with more than a decade of experience designing and scaling data-intensive software and AI systems — with a focus on measurable business impact.</span>
+          <span data-lang="de">Ich bin Machine Learning Engineer mit über zehn Jahren Erfahrung im Entwurf und der Skalierung datenintensiver Software- und KI-Systeme — mit klarem Fokus auf messbaren Geschäftsnutzen.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="about-grid reveal">
+      <div class="about-copy">
+        <p data-lang="en">Alongside full-time engineering work, I run an independent consulting practice — advising <em>startups and scaling businesses</em> on Applied AI Architecture. I specialize in the foundations of NLP systems, eCommerce search, recommender systems and MLOps.</p>
+        <p data-lang="de">Neben meiner Festanstellung berate ich selbstständig <em>Startups und wachsende Unternehmen</em> — spezialisiert auf angewandte KI-Architektur, NLP-Systeme, eCommerce-Suche, Recommender Systems und MLOps.</p>
+
+        <p data-lang="en">Most recently, I partnered with an <em>eCommerce startup</em> to navigate and resolve complex AI architectural challenges. Previously at <strong>KPMG</strong>, I led the technical direction of an NLP-driven SaaS platform — stabilising architecture, enforcing MLOps standards, and guiding cross-functional teams.</p>
+        <p data-lang="de">Zuletzt habe ich ein <em>eCommerce-Startup</em> durch komplexe KI-Architekturfragen begleitet. Davor verantwortete ich bei <strong>KPMG</strong> die technische Ausrichtung einer NLP-getriebenen SaaS-Plattform — Architektur stabilisiert, MLOps-Standards verankert und cross-funktionale Teams geführt.</p>
+
+        <p data-lang="en">Before that, at <strong>Chrono24</strong>, I spearheaded end-to-end development of ML platforms used by <em>millions globally</em> — driving adoption of LLMs, vector search and transformer-based models in production.</p>
+        <p data-lang="de">Davor verantwortete ich bei <strong>Chrono24</strong> die End-to-End-Entwicklung von ML-Plattformen, die <em>weltweit millionenfach genutzt</em> wurden — und brachte LLMs, Vector Search und Transformer-Modelle in den produktiven Betrieb.</p>
+      </div>
+
+      <div class="quote-card">
+        <span class="term-comment"># philosophy</span>
+        <br><br>
+        <span class="q-line strike" data-lang="en">coding fragile prototypes</span>
+        <span class="q-line strike" data-lang="de">fragile Prototypen coden</span>
+        <span class="q-line go" data-lang="en">engineering reliable AI systems</span>
+        <span class="q-line go" data-lang="de">zuverlässige KI-Systeme bauen</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="block" id="services">
+  <div class="wrap">
+    <div class="block-head reveal">
+      <div class="block-tag">02 / Services</div>
+      <div>
+        <h2 class="block-title">
+          <span data-lang="en">Where I can <span class="accent">actually help</span>.</span>
+          <span data-lang="de">Wo ich <span class="accent">wirklich helfen</span> kann.</span>
+        </h2>
+        <p class="block-lede">
+          <span data-lang="en">Five areas I've shipped in production, repeatedly. Most engagements touch one or two of these; the depth matters more than the breadth.</span>
+          <span data-lang="de">Fünf Felder, in denen ich wiederholt in Produktion geliefert habe. Die meisten Mandate drehen sich um ein bis zwei davon — Tiefe zählt hier mehr als Breite.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="services reveal">
+
+      <article class="service">
+        <div class="service-head">
+          <span class="service-num">[ 01 / 05 ]</span>
+          <span class="service-kind" data-lang="en">Architecture</span>
+          <span class="service-kind" data-lang="de">Architektur</span>
+        </div>
+        <h3 class="service-title" data-lang="en">Applied AI Architecture</h3>
+        <h3 class="service-title" data-lang="de">Angewandte KI-Architektur</h3>
+        <p class="service-desc" data-lang="en">From system diagram to deployed service. Designing AI architectures that stand up to real traffic, budgets and failure modes. Choose the right primitives (LLMs, embeddings, retrieval, agents) and compose them into systems that actually ship.</p>
+        <p class="service-desc" data-lang="de">Vom Systementwurf bis zum Deployment. KI-Architekturen, die echtem Traffic, echten Budgets und echten Fehlerfällen standhalten. Die richtigen Bausteine wählen (LLMs, Embeddings, Retrieval, Agents) — und zu Systemen komponieren, die tatsächlich in Produktion gehen.</p>
+        <div class="tags">
+          <span class="tag live">system design</span>
+          <span class="tag">LLM integration</span>
+          <span class="tag">agents</span>
+          <span class="tag">event-driven</span>
+          <span class="tag ">Kubernetes</span>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="service-head">
+          <span class="service-num">[ 02 / 05 ]</span>
+          <span class="service-kind" data-lang="en">Search &amp; Retrieval</span>
+          <span class="service-kind" data-lang="de">Suche &amp; Retrieval</span>
+        </div>
+        <h3 class="service-title" data-lang="en">eCommerce Search Relevance</h3>
+        <h3 class="service-title" data-lang="de">eCommerce-Suche &amp; Relevanz</h3>
+        <p class="service-desc" data-lang="en">Hybrid retrieval that moves metrics. Vector search, Solr tuning and Learning-to-Rank pipelines built on measurable relevance — not on vibes. Deep work across Solr and ranking systems for eCommerce catalogues at scale.</p>
+        <p class="service-desc" data-lang="de">Hybrides Retrieval, das Kennzahlen bewegt. Vector Search, Solr-Tuning und Learning-to-Rank-Pipelines auf Basis messbarer Relevanz — statt Bauchgefühl. Fundierte Erfahrung mit Solr und Ranking-Systemen für eCommerce-Kataloge im großen Maßstab.</p>
+        <div class="tags">
+          <span class="tag live">vector search</span>
+          <span class="tag">Solr</span>
+          <span class="tag">learning-to-rank</span>
+          <span class="tag">hybrid retrieval</span>
+          <span class="tag">relevance eval</span>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="service-head">
+          <span class="service-num">[ 03 / 05 ]</span>
+          <span class="service-kind" data-lang="en">Personalisation</span>
+          <span class="service-kind" data-lang="de">Personalisierung</span>
+        </div>
+        <h3 class="service-title" data-lang="en">Agentic Recommender Systems</h3>
+        <h3 class="service-title" data-lang="de">Agentische Empfehlungssysteme</h3>
+        <p class="service-desc" data-lang="en">Recommendation architectures from classic collaborative filtering through transformer-based and agentic systems. Built the NLP-inspired deep recommender presented at Rework AI London 2022 — clear view on where the costs and the wins actually are.</p>
+        <p class="service-desc" data-lang="de">Empfehlungs-Architekturen — von klassischem Collaborative Filtering über Transformer-basierte bis hin zu agentischen Systemen. Den auf der Rework AI London 2022 präsentierten NLP-inspirierten Deep Recommender selbst gebaut — mit klarem Blick dafür, wo die echten Kosten und die echten Gewinne liegen.</p>
+        <div class="tags">
+          <span class="tag">transformers</span>
+          <span class="tag">embeddings</span>
+          <span class="tag">collaborative filtering</span>
+          <span class="tag">cold-start</span>
+          <span class="tag">A/B design</span>
+        </div>
+      </article>
+
+      <article class="service">
+        <div class="service-head">
+          <span class="service-num">[ 04 / 05 ]</span>
+          <span class="service-kind">MLOps</span>
+        </div>
+        <h3 class="service-title" data-lang="en">Reliable MLOps Pipelines</h3>
+        <h3 class="service-title" data-lang="de">Zuverlässige MLOps-Pipelines</h3>
+        <p class="service-desc" data-lang="en">Observability, reproducibility, CI/CD, drift monitoring, test coverage that means something. Kubernetes-native deployments, Helm charts and infra-as-code — the unglamorous foundation that decides whether an AI project survives past the demo.</p>
+        <p class="service-desc" data-lang="de">Observability, Reproduzierbarkeit, CI/CD, Drift-Monitoring, Testabdeckung, die etwas aussagt. Kubernetes-native Deployments, Helm-Charts und Infrastructure-as-Code — das unspektakuläre Fundament, das darüber entscheidet, ob ein KI-Projekt die Demo überlebt.</p>
+        <div class="tags">
+          <span class="tag live">Kubernetes</span>
+          <span class="tag">Helm</span>
+          <span class="tag">CI/CD</span>
+          <span class="tag">Airflow</span>
+          <span class="tag">Terraform</span>
+          <span class="tag">observability</span>
+          <span class="tag">testing</span>
+          <span class="tag">Snowflake</span>
+        </div>
+      </article>
+
+      <article class="service service-wide">
+        <div class="service-head">
+          <span class="service-num">[ 05 / 05 ]</span>
+          <span class="service-kind" data-lang="en">Agentic Engineering</span>
+          <span class="service-kind" data-lang="de">Agentic Engineering</span>
+          <span class="service-new" data-lang="en">new · in demand</span>
+          <span class="service-new" data-lang="de">neu · gefragt</span>
+        </div>
+        <h3 class="service-title" data-lang="en">Agentic Engineering Consulting</h3>
+        <h3 class="service-title" data-lang="de">Agentic-Engineering-Beratung</h3>
+        <p class="service-desc" data-lang="en">Practical coaching and architecture for teams adopting agentic coding tools — Claude Code, Cursor, Copilot, custom agents. How to actually wire them into the developer workflow: <em>CI integration, automated PR review, test generation and QA, refactor agents, guarded production changes</em>. Same engineering rigour applied to a brand-new toolchain.</p>
+        <p class="service-desc" data-lang="de">Praxisnahes Coaching und Architektur für Teams, die agentische Coding-Tools einführen — Claude Code, Cursor, Copilot, eigene Agents. Wie sie wirklich in den Entwicklungs-Workflow eingebunden werden: <em>CI-Integration, automatisiertes PR-Review, Testgenerierung und QA, Refactoring-Agents, abgesicherte Produktions-Deployments</em>. Dieselbe Engineering-Disziplin, angewendet auf eine brandneue Toolchain.</p>
+        <div class="tags">
+          <span class="tag live">Claude Code</span>
+          <span class="tag">Cursor</span>
+          <span class="tag">Copilot</span>
+          <span class="tag">custom agents</span>
+          <span class="tag">CI integration</span>
+          <span class="tag">PR review</span>
+          <span class="tag">QA &amp; test generation</span>
+          <span class="tag">developer workflow</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section class="block" id="work">
+  <div class="wrap">
+    <div class="block-head reveal">
+      <div class="block-tag">03 / Work</div>
+      <div>
+        <h2 class="block-title">
+          <span data-lang="en">A track record. <span class="accent">Not a pitch deck.</span></span>
+          <span data-lang="de">Eine Erfolgsbilanz. <span class="accent">Kein Pitchdeck.</span></span>
+        </h2>
+        <p class="block-lede">
+          <span data-lang="en">A selection of the work that informs how I consult. Current advisory engagements are confidential; the descriptions below cover the roles and systems that shaped the approach.</span>
+          <span data-lang="de">Eine Auswahl der Projekte, die meinen Beratungsansatz prägen. Aktuelle Beratungsmandate sind vertraulich; die Beschreibungen unten zeigen die Rollen und Systeme, aus denen dieser Ansatz gewachsen ist.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="work-list reveal">
+
+      <article class="work-row">
+        <div class="work-year">2025 → <span class="now">now</span></div>
+        <div>
+          <div class="work-client" data-lang="en">US Luxury eCommerce Platform</div>
+          <div class="work-client" data-lang="de">US Luxury-eCommerce-Plattform</div>
+          <div class="work-location" data-lang="en">Advisory · confidential</div>
+          <div class="work-location" data-lang="de">Beratung · vertraulich</div>
+        </div>
+        <div>
+          <div class="work-role">
+            <span data-lang="en">Applied AI Architecture Advisor</span>
+            <span data-lang="de">Berater für angewandte KI-Architektur</span>
+            <span class="pill">active</span>
+          </div>
+          <div class="work-note">
+            <span data-lang="en">Advising the founding engineers on the AI foundations of a luxury eCommerce platform (US). Helped shape a <em>hierarchical, recommendation-friendly catalog and listing data model</em> built to outlast the first wave of features, and guided the integration of <em>visual embeddings</em> into retrieval so the platform can surface similar items across a highly aesthetic catalog — keeping the production ML stack honest and debuggable.</span>
+            <span data-lang="de">Beratung der Gründungs-Engineers zu den KI-Grundlagen einer Luxury-eCommerce-Plattform (US). Mitgestaltung eines <em>hierarchischen, empfehlungstauglichen Katalog- und Listing-Datenmodells</em>, das über die erste Feature-Welle hinaus trägt — und Begleitung bei der Integration von <em>Visual Embeddings</em> ins Retrieval, damit die Plattform in einem stark ästhetischen Katalog ähnliche Produkte zuverlässig findet. Mit Fokus auf einen produktionsreifen, nachvollziehbaren ML-Stack.</span>
+          </div>
+        </div>
+        <div class="work-arrow">↗</div>
+      </article>
+
+      <article class="work-row">
+        <div class="work-year">2024 → 2026</div>
+        <div>
+          <div class="work-client">KPMG AG</div>
+          <div class="work-location">Karlsruhe, DE</div>
+        </div>
+        <div>
+          <div class="work-role">
+            <span data-lang="en">Manager / Senior Specialist — NLP &amp; AI</span>
+            <span data-lang="de">Manager / Senior Specialist — NLP &amp; KI</span>
+          </div>
+          <div class="work-note">
+            <div class="subnote">
+              <span class="sub-label" data-lang="en">Platform Engineering &amp; Delivery</span>
+              <span class="sub-label" data-lang="de">Platform-Engineering &amp; Delivery</span>
+              <span data-lang="en">Spearheaded a containerised <em>NLP SaaS platform</em> (Python · .NET · Kubernetes · event-driven). Initiated and drove the technical roadmap — dependency management, build system, OSS compliance, a <em>DevOps / CI/CD initiative</em>, and a performance &amp; scaling roadmap — with a deliberate, measurable quality strategy running through all of it.</span>
+              <span data-lang="de">Federführender Aufbau einer containerisierten <em>NLP-SaaS-Plattform</em> (Python · .NET · Kubernetes · event-driven). Technische Roadmap initiiert und umgesetzt — Dependency-Management, Build-System, OSS-Compliance, eine <em>DevOps- / CI/CD-Initiative</em>, sowie eine Performance- und Skalierungs-Roadmap — durchgängig getragen von einer bewussten, messbaren Qualitätsstrategie.</span>
+            </div>
+            <div class="subnote">
+              <span class="sub-label" data-lang="en">Pre-Sales SME &amp; Client Delivery</span>
+              <span class="sub-label" data-lang="de">Pre-Sales-SME &amp; Kundenprojekte</span>
+              <span data-lang="en">Technical SME for NLP / ML / GenAI in strategic sales and management rounds — supporting proposals with honest feasibility calls and building trust by pushing back on over-promised commitments. Led the technical side of multiple enterprise handovers and on-site workshops, and acted as the escalation engineer for <em>production incidents</em>, root-cause analyses and post-mortems. Enabled several <em>revenue-generating</em> projects.</span>
+              <span data-lang="de">Technischer SME für NLP / ML / GenAI in strategischen Sales- und Management-Runden — mit ehrlicher Machbarkeits-Einschätzung bei Proposals und klaren Ansagen, wenn Kunden-Versprechen zu weit gingen. So ist im Vertriebsteam Vertrauen entstanden. Technisch federführend bei mehreren Kundenübergaben und Vor-Ort-Workshops, und Eskalations-Engineer für <em>Produktionsstörungen</em>, Root-Cause-Analysen und Post-Mortems. Mehrere <em>umsatzgenerierende</em> Projekte dadurch ermöglicht.</span>
+            </div>
+            <div class="subnote">
+              <span class="sub-label" data-lang="en">Leadership &amp; Engineering Culture</span>
+              <span class="sub-label" data-lang="de">Führung &amp; Engineering-Kultur</span>
+              <span data-lang="en">Led a cross-functional team of <em>5–10</em> across ML, backend and ops. Acted as a <em>software-quality ambassador</em> beyond the immediate platform — contributing to the wider engineering standards of the firm and improving cross-team collaboration with central IT. Also owned <em>enterprise compliance</em> topics — OSS licensing, CVE and vulnerability management — at the security bar expected at a Big-Four firm.</span>
+              <span data-lang="de">Cross-funktionales Team von <em>5–10</em> über ML, Backend und Ops hinweg geführt. Als <em>Qualitätsbotschafter für Software</em> auch über die eigene Plattform hinaus gewirkt — mit Beiträgen zu den unternehmensweiten Engineering-Standards und einer sprürbar besseren Zusammenarbeit mit der zentralen IT. Zudem verantwortlich für <em>Enterprise-Compliance</em> — OSS-Lizenzen, CVE- und Vulnerability-Management — auf dem Security-Niveau, das in einer Big-Four-Umgebung erwartet wird.</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-arrow">↗</div>
+      </article>
+
+      <article class="work-row">
+        <div class="work-year">2022 → 2024</div>
+        <div>
+          <div class="work-client">Chrono24 GmbH</div>
+          <div class="work-location">Karlsruhe, DE</div>
+        </div>
+        <div>
+          <div class="work-role">
+            <span data-lang="en">Lead Machine Learning Engineer</span>
+            <span data-lang="de">Lead Machine Learning Engineer</span>
+          </div>
+          <div class="work-note">
+            <div class="subnote">
+              <span class="sub-label" data-lang="en">Enterprise ML Infrastructure &amp; Search Optimisation</span>
+              <span class="sub-label" data-lang="de">Enterprise-ML-Infrastruktur &amp; Search-Optimierung</span>
+              <span data-lang="en">Architected and deployed an end-to-end ML platform on <em>Docker, Airflow, Terraform and Snowflake</em>. Pioneered the integration of <em>Learning to Rank</em> within Solr, with rigorous <em>NDCG benchmarking</em> to quantitatively prove and optimise search relevance.</span>
+              <span data-lang="de">End-to-End-ML-Plattform auf <em>Docker, Airflow, Terraform und Snowflake</em> konzipiert und in Produktion gebracht. <em>Learning to Rank</em> als Erster in Solr integriert — mit konsequentem <em>NDCG-Benchmarking</em>, um Suchrelevanz quantitativ zu belegen und gezielt zu verbessern.</span>
+            </div>
+            <div class="subnote">
+              <span class="sub-label" data-lang="en">GenAI &amp; Vector Strategy</span>
+              <span class="sub-label" data-lang="de">GenAI &amp; Vector-Strategie</span>
+              <span data-lang="en">Led the internal adoption of <em>LLMs, OpenAI APIs and vector search</em> — moving from experimental prototypes to productionised generative use-cases with <em>measurable business impact</em>.</span>
+              <span data-lang="de">Interne Einführung von <em>LLMs, OpenAI-APIs und Vector Search</em> vorangetrieben — von experimentellen Prototypen bis hin zu produktiven GenAI-Anwendungsfällen mit <em>messbarem Geschäftsimpact</em>.</span>
+            </div>
+            <div class="subnote">
+              <span class="sub-label" data-lang="en">Leadership &amp; Team Growth</span>
+              <span class="sub-label" data-lang="de">Führung &amp; Teamaufbau</span>
+              <span data-lang="en">Acted as technical hiring lead and mentor — owning interviewing, onboarding and professional development of the <em>Machine Learning and Data Engineering teams</em>.</span>
+              <span data-lang="de">Technischer Hiring-Lead und Mentor — verantwortlich für Interviews, Onboarding und die fachliche Weiterentwicklung der <em>Machine-Learning- und Data-Engineering-Teams</em>.</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-arrow">↗</div>
+      </article>
+
+      <article class="work-row">
+        <div class="work-year">2018 → 2022</div>
+        <div>
+          <div class="work-client">Chrono24 GmbH</div>
+          <div class="work-location">Senior MLE</div>
+        </div>
+        <div>
+          <div class="work-role">
+            <span data-lang="en">Senior Machine Learning Engineer</span>
+            <span data-lang="de">Senior Machine Learning Engineer</span>
+          </div>
+          <div class="work-note">
+            <div class="subnote">
+              <span class="sub-label" data-lang="en">Creator of the Chrono24 Watch Scanner</span>
+              <span class="sub-label" data-lang="de">Entwickler des Chrono24 Watch Scanner</span>
+              <span data-lang="en">I conceived and engineered the platform's Watch Scanner from the ground up. This involved building custom image classification models (<em>CNNs, TensorFlow</em>) and designing a dedicated, <em>auto-scaling AWS architecture</em> capable of handling <em>20,000+ daily requests</em> at peak.</span>
+              <span data-lang="de">Den Watch Scanner der Plattform habe ich von Grund auf konzipiert und entwickelt — mit eigenen Bildklassifikations-Modellen (<em>CNNs, TensorFlow</em>) und einer dedizierten, <em>autoskalierenden AWS-Architektur</em>, die im Peak <em>20.000+ Anfragen pro Tag</em> bedient hat.</span>
+            </div>
+            <div class="subnote">
+              <span class="sub-label" data-lang="en">Advanced Anti-Fraud &amp; Platform Integrity</span>
+              <span class="sub-label" data-lang="de">Anti-Fraud &amp; Plattform-Integrität</span>
+              <span data-lang="en">Beyond computer vision, I developed an end-to-end <em>anti-fraud system</em> to mitigate platform abuse and <em>disintermediation</em>. The hybrid engine leveraged SVMs and Random Forests alongside LSTMs and Transformers to analyze behavioural patterns and linguistic cues.</span>
+              <span data-lang="de">Zusätzlich zu Computer Vision habe ich ein End-to-End-<em>Anti-Fraud-System</em> aufgebaut, das Plattform-Missbrauch und <em>Disintermediation</em> gezielt unterbunden hat. Die hybride Engine kombinierte SVMs und Random Forests mit LSTMs und Transformern, um Verhaltensmuster und sprachliche Signale gemeinsam auszuwerten.</span>
+            </div>
+            <div class="subnote">
+              <span class="sub-label" data-lang="en">Thought Leadership</span>
+              <span class="sub-label" data-lang="de">Thought Leadership</span>
+              <span data-lang="en">Speaker at the <em>RE•WORK AI Summit</em>, London 2022.</span>
+              <span data-lang="de">Speaker auf dem <em>RE•WORK AI Summit</em>, London 2022.</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-arrow">↗</div>
+      </article>
+
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat">
+        <div class="stat-num">10<span class="u">+</span></div>
+        <div class="stat-label">
+          <span data-lang="en">years in<br>production ML</span>
+          <span data-lang="de">Jahre in<br>Produktions-ML</span>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5–10</div>
+        <div class="stat-label">
+          <span data-lang="en">cross-functional<br>team, led</span>
+          <span data-lang="de">cross-funktionales<br>Team geführt</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WRITING / BLOG ================= -->
+<section class="block" id="writing">
+  <div class="wrap">
+    <div class="block-head reveal">
+      <div class="block-tag">04 / Writing</div>
+      <div>
+        <h2 class="block-title">
+          <span data-lang="en">Notes from <span class="accent">the field</span>.</span>
+          <span data-lang="de">Notizen aus <span class="accent">der Praxis</span>.</span>
+        </h2>
+        <p class="block-lede">
+          <span data-lang="en">Writing on applied AI, MLOps, eCommerce search, and the unglamorous engineering realities behind them. Feeds pulled live from Medium and Substack.</span>
+          <span data-lang="de">Texte zu angewandter KI, MLOps, eCommerce-Suche — und den unspektakulären Engineering-Realitäten dahinter. Feeds direkt von Medium und Substack.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="posts-controls reveal">
+      <div class="post-filter-btns" role="group" aria-label="Filter posts">
+        <button type="button" data-filter="all" class="active">
+          <span data-lang="en">All</span><span data-lang="de">Alle</span>
+          <span class="count" data-count="all">—</span>
+        </button>
+        <button type="button" data-filter="medium">
+          Medium
+          <span class="count" data-count="medium">—</span>
+        </button>
+        <button type="button" data-filter="substack">
+          Substack
+          <span class="count" data-count="substack">—</span>
+        </button>
+      </div>
+      <div class="posts-links">
+        <a href="#" data-feed-link="medium" target="_blank" rel="noopener" hidden>
+          <span data-lang="en">View on Medium ↗</span>
+          <span data-lang="de">Auf Medium ansehen ↗</span>
+        </a>
+        <a href="#" data-feed-link="substack" target="_blank" rel="noopener" hidden>
+          <span data-lang="en">View on Substack ↗</span>
+          <span data-lang="de">Auf Substack ansehen ↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="posts-container reveal">
+      <div class="posts-loading" id="posts-loading">
+        <span class="term-prompt">$</span>
+        <span data-lang="en">fetching feeds</span><span data-lang="de">Feeds werden geladen</span><span class="term-cursor"></span>
+      </div>
+
+      <div class="posts-setup" id="posts-setup" hidden>
+        <h4 data-lang="en">feeds not configured</h4>
+        <h4 data-lang="de">Feeds nicht konfiguriert</h4>
+        <p data-lang="en">
+          To show your posts here, open <code>index.html</code>, find the <code>FEEDS</code>
+          block near the bottom of the file, and replace the placeholder URLs with your actual
+          Medium and/or Substack feed URLs — then set <code>enabled: true</code> for each feed
+          you want to display.
+        </p>
+        <p data-lang="de">
+          Um deine Beiträge hier anzuzeigen, öffne <code>index.html</code>, finde den
+          <code>FEEDS</code>-Block am Ende der Datei und ersetze die Platzhalter-URLs durch
+          deine echten Medium- und/oder Substack-Feed-URLs — setze dann <code>enabled: true</code>
+          für jeden Feed, der angezeigt werden soll.
+        </p>
+        <p data-lang="en">
+          Medium format: <code>https://medium.com/feed/@your-handle</code><br>
+          Substack format: <code>https://yourname.substack.com/feed</code>
+        </p>
+        <p data-lang="de">
+          Medium-Format: <code>https://medium.com/feed/@dein-handle</code><br>
+          Substack-Format: <code>https://deinname.substack.com/feed</code>
+        </p>
+      </div>
+
+      <div class="posts-error" id="posts-error" hidden>
+        <h4 data-lang="en">couldn't load feeds</h4>
+        <h4 data-lang="de">Feeds konnten nicht geladen werden</h4>
+        <p data-lang="en">
+          Something went wrong fetching the RSS feeds. Check that the feed URLs in the
+          <code>FEEDS</code> config at the bottom of <code>index.html</code> are correct and
+          publicly accessible. The service used to bypass CORS (<code>rss2json.com</code>) may
+          also be rate-limited or temporarily unavailable.
+        </p>
+        <p data-lang="de">
+          Beim Abrufen der RSS-Feeds ist ein Fehler aufgetreten. Prüfe, ob die Feed-URLs im
+          <code>FEEDS</code>-Block am Ende von <code>index.html</code> korrekt und öffentlich
+          erreichbar sind. Der Proxy-Dienst (<code>rss2json.com</code>) kann zudem
+          Rate-Limits haben oder vorübergehend nicht verfügbar sein.
+        </p>
+        <p id="posts-error-detail" class="mono" style="color: var(--fg-mute); font-size: 0.78rem;"></p>
+      </div>
+
+      <div class="posts-list" id="posts-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STACK ================= -->
+<section class="block" id="stack">
+  <div class="wrap">
+    <div class="block-head reveal">
+      <div class="block-tag">05 / Stack</div>
+      <div>
+        <h2 class="block-title">
+          <span data-lang="en">The tools <span class="accent">in rotation</span>.</span>
+          <span data-lang="de">Der Stack <span class="accent">im Einsatz</span>.</span>
+        </h2>
+        <p class="block-lede">
+          <span data-lang="en">Technologies used in production across the last decade. Depth over breadth — I commit to tools I know deeply.</span>
+          <span data-lang="de">Technologien, die ich im letzten Jahrzehnt in Produktion eingesetzt habe. Tiefe statt Breite — ich committe mich auf Tools, die ich wirklich kenne.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="stack-grid reveal">
+      <div class="stack-col">
+        <h4 data-lang="en">AI / ML</h4>
+        <h4 data-lang="de">KI / ML</h4>
+        <ul>
+          <li>PyTorch</li>
+          <li>TensorFlow</li>
+          <li>Hugging Face</li>
+          <li>OpenAI API</li>
+          <li>LangChain / Agents</li>
+          <li>Vector DBs</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4 data-lang="en">Languages</h4>
+        <h4 data-lang="de">Sprachen</h4>
+        <ul>
+          <li>Python</li>
+          <li>Java</li>
+          <li>.NET / C#</li>
+          <li>Scala</li>
+          <li>SQL</li>
+          <li>Bash</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4 data-lang="en">Infrastructure</h4>
+        <h4 data-lang="de">Infrastruktur</h4>
+        <ul>
+          <li>Docker</li>
+          <li>Kubernetes</li>
+          <li>Terraform</li>
+          <li>AWS</li>
+          <li>GitLab CI</li>
+          <li>Airflow</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4 data-lang="en">Data / Search</h4>
+        <h4 data-lang="de">Daten / Suche</h4>
+        <ul>
+          <li>Solr</li>
+          <li>Elastic Stack</li>
+          <li>Snowflake</li>
+          <li>Apache Spark</li>
+          <li>RabbitMQ</li>
+          <li>Stream Processing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="creds-grid reveal">
+      <div class="cred-col">
+        <h4 data-lang="en">Education</h4>
+        <h4 data-lang="de">Ausbildung</h4>
+        <div class="cred-item">
+          <div class="cred-title" data-lang="en">M.Sc. Machine Learning</div>
+          <div class="cred-title" data-lang="de">M.Sc. Machine Learning</div>
+          <div class="cred-meta">Karlsruhe University · 2016–2018</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-title" data-lang="en">B.Sc. Computer Science</div>
+          <div class="cred-title" data-lang="de">B.Sc. Informatik</div>
+          <div class="cred-meta">Karlsruhe University · 2011–2015</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-title">ML Engineer Nanodegree</div>
+          <div class="cred-meta">Udacity · 2016–2017</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-title">Technical Student</div>
+          <div class="cred-meta">CERN · 2017–2018</div>
+        </div>
+      </div>
+
+      <div class="cred-col">
+        <h4 data-lang="en">Certifications</h4>
+        <h4 data-lang="de">Zertifikate</h4>
+        <div class="cred-item">
+          <div class="cred-title">Learning to Rank</div>
+          <div class="cred-meta">Opensource Connections · 2024</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-title">Solr Search</div>
+          <div class="cred-meta">Opensource Connections · 2023</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-title" data-lang="en">Developer Training · Spark &amp; Hadoop</div>
+          <div class="cred-title" data-lang="de">Developer-Training · Spark &amp; Hadoop</div>
+          <div class="cred-meta">Cloudera · 2015</div>
+        </div>
+      </div>
+
+      <div class="cred-col">
+        <h4 data-lang="en">Speaking &amp; Public Work</h4>
+        <h4 data-lang="de">Vorträge &amp; Öffentliches</h4>
+        <div class="cred-item">
+          <div class="cred-title">“NLP-inspired deep recommender for out-of-catalog items”</div>
+          <div class="cred-meta">Rework AI Conference · London · 2022</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-title" data-lang="en">Open source</div>
+          <div class="cred-title" data-lang="de">Open Source</div>
+          <div class="cred-meta">github.com/digital-thinking</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-title" data-lang="en">Notes &amp; articles</div>
+          <div class="cred-title" data-lang="de">Notizen &amp; Artikel</div>
+          <div class="cred-meta">digital-thinking.de</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="block" id="contact">
+  <div class="wrap">
+    <div class="block-head reveal">
+      <div class="block-tag">06 / Contact</div>
+      <div>
+        <h2 class="block-title">
+          <span data-lang="en">Start a <span class="accent">brief</span>.</span>
+          <span data-lang="de">Ein <span class="accent">Briefing</span> schicken.</span>
+        </h2>
+        <p class="block-lede">
+          <span data-lang="en">Founding engineers, CTOs and product leads wrestling with AI architecture, search, recommenders or MLOps maturity — the first call is a conversation, not a pitch.</span>
+          <span data-lang="de">Gründungs-Engineers, CTOs und Product Leads, die an KI-Architektur, Suche, Empfehlungssystemen oder MLOps-Reife arbeiten — der erste Call ist ein Gespräch, kein Pitch.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="contact-box reveal">
+      <div class="contact-grid">
+        <div>
+          <div class="contact-head">
+            <span data-lang="en">Describe the problem in <span class="accent">a paragraph.</span></span>
+            <span data-lang="de">Das Problem in <span class="accent">einem Absatz</span> beschreiben.</span>
+          </div>
+          <p class="contact-copy">
+            <span data-lang="en">I'll tell you honestly whether I'm the right person for it — and, if I'm not, who is. Usual response within 48 hours.</span>
+            <span data-lang="de">Ich sage offen, ob ich der Richtige dafür bin — und falls nicht, wer es ist. Rückmeldung in der Regel innerhalb von 48 Stunden.</span>
+          </p>
+
+          <div class="channel">
+            <div class="channel-k">Email</div>
+            <div class="channel-v"><a class="email-lnk" href="#" data-u="gnitlusnoc" data-d="ed.gnikniht-latigid" rel="nofollow">[ reveal email ]</a></div>
+          </div>
+          <div class="channel">
+            <div class="channel-k">Web</div>
+            <div class="channel-v"><a href="https://www.digital-thinking.de" target="_blank" rel="noopener">digital-thinking.de</a></div>
+          </div>
+          <div class="channel">
+            <div class="channel-k">Code</div>
+            <div class="channel-v"><a href="https://github.com/digital-thinking" target="_blank" rel="noopener">github.com/digital-thinking</a></div>
+          </div>
+        </div>
+
+        <aside class="brief-card">
+          <h4 data-lang="en">A good brief contains</h4>
+          <h4 data-lang="de">Ein gutes Briefing enthält</h4>
+          <ul class="brief-list">
+            <li data-lang="en">The business outcome you want to move</li>
+            <li data-lang="de">Das Ergebnis, das erreicht werden soll</li>
+            <li data-lang="en">Your current stack &amp; where it hurts</li>
+            <li data-lang="de">Der aktuelle Stack — und wo es weh tut</li>
+            <li data-lang="en">Team size &amp; in-house ML capability</li>
+            <li data-lang="de">Teamgröße &amp; interne ML-Kompetenz</li>
+            <li data-lang="en">Timeline &amp; rough budget shape</li>
+            <li data-lang="de">Zeitplan &amp; ungefährer Budgetrahmen</li>
+            <li data-lang="en">What you've already tried</li>
+            <li data-lang="de">Was bisher versucht wurde</li>
+          </ul>
+          <a href="#" class="btn btn-primary email-lnk" data-u="gnitlusnoc" data-d="ed.gnikniht-latigid" data-subject="Consulting brief — digital-thinking" data-body="Hi Christian,%0A%0ABusiness outcome:%0ACurrent stack:%0ATeam:%0ATimeline:%0A%0A" rel="nofollow" style="width: 100%; justify-content: center;">
+            <span data-lang="en">Send a brief</span>
+            <span data-lang="de">Briefing senden</span>
+          </a>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= IMPRESSUM MODAL ================= -->
+<!-- To update the address: reverse each line character-by-character and put the result in data-l1 / data-l2 -->
+<!-- e.g. "Musterstraße 1" reversed = "1 eßartsretsuM" · "76133 Karlsruhe" reversed = "ehurslraK 33167" -->
+<div id="impressum-modal" class="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="impressum-title" tabindex="-1">
+  <div class="modal-box">
+    <button class="modal-close" id="impressum-close" aria-label="Close">&times;&nbsp;close</button>
+
+    <h2 class="modal-title" id="impressum-title">
+      <span data-lang="en">Imprint</span>
+      <span data-lang="de">Impressum</span>
+    </h2>
+    <p class="modal-subtitle">
+      <span data-lang="en">Information according to § 5 TMG</span>
+      <span data-lang="de">Angaben gemäß § 5 TMG</span>
+    </p>
+
+    <div class="modal-section">
+      <h4><span data-lang="en">Service provider</span><span data-lang="de">Diensteanbieter</span></h4>
+      <address>
+        Christian Freischlag<br>
+        <!-- REPLACE: set data-l1 = street reversed, data-l2 = zip+city reversed -->
+        <span class="obf-addr" data-l1="1 eßartsretsuM" data-l2="ehurslraK 33167"></span><br>
+        <span data-lang="en">Germany</span><span data-lang="de">Deutschland</span>
+      </address>
+    </div>
+
+    <div class="modal-section">
+      <h4><span data-lang="en">Contact</span><span data-lang="de">Kontakt</span></h4>
+      <p>E-Mail: <a class="email-lnk" href="#" data-u="gnitlusnoc" data-d="ed.gnikniht-latigid" rel="nofollow">[ reveal email ]</a></p>
+    </div>
+
+    <div class="modal-section">
+      <h4>
+        <span data-lang="en">Editorial responsibility (§ 55 Abs. 2 MStV)</span>
+        <span data-lang="de">Verantwortlich für den Inhalt (§ 55 Abs. 2 MStV)</span>
+      </h4>
+      <address>
+        Christian Freischlag<br>
+        <span class="obf-addr" data-l1="1 eßartsretsuM" data-l2="ehurslraK 33167"></span><br>
+        <span data-lang="en">Germany</span><span data-lang="de">Deutschland</span>
+      </address>
+    </div>
+
+    <div class="modal-section">
+      <h4><span data-lang="en">Disclaimer</span><span data-lang="de">Haftungsausschluss</span></h4>
+      <p data-lang="en">Despite careful content control, we assume no liability for the content of external links. The operators of linked pages are solely responsible for their content.</p>
+      <p data-lang="de">Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FOOT ================= -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h5>digital-thinking</h5>
+        <p data-lang="en">Independent consulting by Christian Freischlag. Applied AI Architecture, MLOps and agentic engineering. Based in Karlsruhe, Germany.</p>
+        <p data-lang="de">Unabhängige Beratung von Christian Freischlag. Angewandte KI-Architektur, MLOps und Agentic Engineering. Sitz in Karlsruhe, Deutschland.</p>
+      </div>
+      <div>
+        <h5 data-lang="en">Navigate</h5>
+        <h5 data-lang="de">Navigation</h5>
+        <a href="#about"><span data-lang="en">About</span><span data-lang="de">Über</span></a>
+        <a href="#services"><span data-lang="en">Services</span><span data-lang="de">Leistungen</span></a>
+        <a href="#work"><span data-lang="en">Work</span><span data-lang="de">Referenzen</span></a>
+        <a href="#writing"><span data-lang="en">Writing</span><span data-lang="de">Texte</span></a>
+        <a href="#contact"><span data-lang="en">Contact</span><span data-lang="de">Kontakt</span></a>
+      </div>
+      <div>
+        <h5 data-lang="en">Channels</h5>
+        <h5 data-lang="de">Kanäle</h5>
+        <a href="#" class="email-lnk" data-u="gnitlusnoc" data-d="ed.gnikniht-latigid" rel="nofollow">[ reveal email ]</a>
+        <a href="https://github.com/digital-thinking" target="_blank" rel="noopener">github.com/digital-thinking</a>
+      </div>
+      <div>
+        <h5 data-lang="en">Legal</h5>
+        <h5 data-lang="de">Rechtliches</h5>
+        <a href="#impressum" data-open-modal="impressum"><span data-lang="en">Imprint</span><span data-lang="de">Impressum</span></a>
+        <a href="#"><span data-lang="en">Privacy</span><span data-lang="de">Datenschutz</span></a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 — digital-thinking · Christian Freischlag</div>
+      <div class="legal">
+        <span data-lang="en">Independent consulting practice</span>
+        <span data-lang="de">Selbstständige Beratung</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ============ LANGUAGE TOGGLE ============
+  (function () {
+    const html = document.documentElement;
+    const buttons = document.querySelectorAll('[data-setlang]');
+
+    function setLang(lang) {
+      if (lang !== 'en' && lang !== 'de') lang = 'en';
+      html.lang = lang;
+      try { localStorage.setItem('dt-lang', lang); } catch (e) {}
+      buttons.forEach(b => {
+        b.classList.toggle('active', b.dataset.setlang === lang);
+      });
+    }
+
+    // Initial: stored > browser > en
+    let initial = 'en';
+    try {
+      const stored = localStorage.getItem('dt-lang');
+      if (stored === 'en' || stored === 'de') initial = stored;
+      else if ((navigator.language || '').toLowerCase().startsWith('de')) initial = 'de';
+    } catch (e) {}
+    setLang(initial);
+
+    buttons.forEach(b => {
+      b.addEventListener('click', () => setLang(b.dataset.setlang));
+    });
+  })();
+
+  // ============ REVEAL ON SCROLL ============
+  (function () {
+    const targets = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(t => t.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+    targets.forEach(t => io.observe(t));
+  })();
+
+  // ============ WRITING / BLOG FEED LOADER ============
+  (function () {
+    // ─────────────────────────────────────────────────────────────
+    //  FEEDS · EDIT THIS BLOCK TO CONNECT YOUR MEDIUM / SUBSTACK
+    // ─────────────────────────────────────────────────────────────
+    const FEEDS = {
+      medium: {
+        url: 'https://medium.com/feed/@christian.freischlag',
+        profileUrl: 'https://medium.com/@christian.freischlag',
+        enabled: true
+      },
+      substack: {
+        url: 'https://ixeption.substack.com/feed',
+        profileUrl: 'https://ixeption.substack.com',
+        enabled: true
+      }
+    };
+    // ─────────────────────────────────────────────────────────────
+
+    const MAX_POSTS     = 8;
+    const CACHE_KEY     = 'dt-feeds-cache-v1';
+    const CACHE_TTL_MS  = 30 * 60 * 1000;                       // 30 minutes
+    const RSS_PROXY     = 'https://api.rss2json.com/v1/api.json?rss_url=';
+    // If you later self-host a proxy, just swap RSS_PROXY above.
+
+    const $list     = document.getElementById('posts-list');
+    const $loading  = document.getElementById('posts-loading');
+    const $setup    = document.getElementById('posts-setup');
+    const $error    = document.getElementById('posts-error');
+    const $errDet   = document.getElementById('posts-error-detail');
+    const filterBtns = document.querySelectorAll('[data-filter]');
+    const feedLinks  = document.querySelectorAll('[data-feed-link]');
+
+    if (!$list) return; // section not present
+
+    let allPosts = [];
+    let activeFilter = 'all';
+    let initialized = false;
+
+    const show = el => { if (el) el.hidden = false; };
+    const hide = el => { if (el) el.hidden = true; };
+
+    function stripHtml(html) {
+      if (!html) return '';
+      const div = document.createElement('div');
+      div.innerHTML = html;
+      return (div.textContent || '').replace(/\s+/g, ' ').trim();
+    }
+
+    function estimateReadTime(html) {
+      const words = stripHtml(html).split(/\s+/).filter(Boolean).length;
+      return Math.max(1, Math.round(words / 220));
+    }
+
+    function fmtDate(iso) {
+      const d = new Date(iso);
+      if (isNaN(d)) return '';
+      const lang = document.documentElement.lang === 'de' ? 'de-DE' : 'en-US';
+      try {
+        return d.toLocaleDateString(lang, { year: 'numeric', month: 'short', day: 'numeric' });
+      } catch (e) {
+        return d.toISOString().slice(0, 10);
+      }
+    }
+
+    function escapeHtml(s) {
+      if (!s) return '';
+      return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function cacheGet() {
+      try {
+        const raw = sessionStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const { t, data } = JSON.parse(raw);
+        if (Date.now() - t > CACHE_TTL_MS) return null;
+        return data;
+      } catch (e) { return null; }
+    }
+
+    function cacheSet(data) {
+      try {
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), data }));
+      } catch (e) { /* ignore quota errors */ }
+    }
+
+    async function fetchFeed(sourceKey, feed) {
+      const res = await fetch(RSS_PROXY + encodeURIComponent(feed.url));
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (data.status !== 'ok') {
+        throw new Error(data.message || 'feed parse failed');
+      }
+      return (data.items || []).map(item => ({
+        source:   sourceKey,
+        title:    item.title || '(untitled)',
+        link:     item.link || feed.profileUrl,
+        pubDate:  item.pubDate || item.published || '',
+        excerpt:  stripHtml(item.description || item.content || '').slice(0, 260),
+        readTime: estimateReadTime(item.content || item.description || '')
+      }));
+    }
+
+    function updateCounts() {
+      const c = {
+        all: allPosts.length,
+        medium: allPosts.filter(p => p.source === 'medium').length,
+        substack: allPosts.filter(p => p.source === 'substack').length
+      };
+      document.querySelectorAll('[data-count]').forEach(el => {
+        el.textContent = c[el.dataset.count] ?? '0';
+      });
+    }
+
+    function renderFeedLinks() {
+      feedLinks.forEach(a => {
+        const src = a.dataset.feedLink;
+        const f = FEEDS[src];
+        if (f && f.enabled && f.profileUrl) {
+          a.href = f.profileUrl;
+          a.hidden = false;
+        } else {
+          a.hidden = true;
+        }
+      });
+    }
+
+    function render() {
+      const filtered = activeFilter === 'all'
+        ? allPosts
+        : allPosts.filter(p => p.source === activeFilter);
+      const shown = filtered.slice(0, MAX_POSTS);
+
+      if (shown.length === 0) {
+        const lang = document.documentElement.lang;
+        $list.innerHTML = '<div class="posts-empty">' +
+          (lang === 'de' ? 'Keine Beiträge in dieser Quelle.' : 'No posts in this source.') +
+          '</div>';
+        return;
+      }
+
+      $list.innerHTML = shown.map(p => (
+        '<a class="post-card" href="' + escapeHtml(p.link) + '" target="_blank" rel="noopener" data-source="' + p.source + '">' +
+          '<div class="post-meta">' +
+            '<span class="post-source" data-src="' + p.source + '">' + p.source + '</span>' +
+            (p.pubDate ? '<span class="post-date">' + escapeHtml(fmtDate(p.pubDate)) + '</span>' : '') +
+            '<span class="post-read">· ' + p.readTime + ' min</span>' +
+          '</div>' +
+          '<h3 class="post-title">' + escapeHtml(p.title) + '</h3>' +
+          '<p class="post-excerpt">' + escapeHtml(p.excerpt) + '</p>' +
+          '<span class="post-link">read</span>' +
+        '</a>'
+      )).join('');
+    }
+
+    async function init() {
+      if (initialized) return;
+      initialized = true;
+
+      renderFeedLinks();
+
+      const enabled = Object.entries(FEEDS).filter(([_, f]) => f.enabled && f.url);
+      if (enabled.length === 0) {
+        // No feeds wired up yet — hide the whole Writing section gracefully
+        // so the site doesn't show a "feeds not configured" developer note.
+        hide($loading);
+        const writingSec = document.getElementById('writing');
+        if (writingSec) writingSec.style.display = 'none';
+        const navWritingLink = document.querySelector('.nav-links a[href="#writing"]');
+        if (navWritingLink) navWritingLink.style.display = 'none';
+        const footWritingLink = document.querySelector('.foot a[href="#writing"]');
+        if (footWritingLink) footWritingLink.style.display = 'none';
+        return;
+      }
+
+      // Try cache
+      const cached = cacheGet();
+      if (cached && cached.length) {
+        allPosts = cached;
+        hide($loading);
+        updateCounts();
+        render();
+        return;
+      }
+
+      try {
+        const results = await Promise.allSettled(
+          enabled.map(([key, feed]) => fetchFeed(key, feed))
+        );
+
+        allPosts = [];
+        const errors = [];
+        results.forEach((r, i) => {
+          if (r.status === 'fulfilled') {
+            allPosts = allPosts.concat(r.value);
+          } else {
+            errors.push(enabled[i][0] + ': ' + (r.reason && r.reason.message || 'unknown'));
+          }
+        });
+
+        allPosts.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+        hide($loading);
+
+        if (allPosts.length === 0) {
+          show($error);
+          if ($errDet && errors.length) $errDet.textContent = errors.join(' · ');
+          return;
+        }
+
+        cacheSet(allPosts);
+        updateCounts();
+        render();
+      } catch (e) {
+        hide($loading);
+        show($error);
+        if ($errDet) $errDet.textContent = String(e && e.message || e);
+      }
+    }
+
+    // Filter button clicks
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.toggle('active', b === btn));
+        activeFilter = btn.dataset.filter;
+        render();
+      });
+    });
+
+    // Re-render dates when language changes
+    document.querySelectorAll('[data-setlang]').forEach(b => {
+      b.addEventListener('click', () => {
+        if (allPosts.length) setTimeout(render, 50);
+      });
+    });
+
+    // Lazy init when section becomes visible
+    const section = document.getElementById('writing');
+    if (section && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            init();
+            io.disconnect();
+          }
+        });
+      }, { rootMargin: '300px' });
+      io.observe(section);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+<script>
+  // Email obfuscation — assembles mailto href + visible text at runtime
+  (function () {
+    var rev = function (s) { return (s || '').split('').reverse().join(''); };
+    var links = document.querySelectorAll('.email-lnk');
+    var build = function (el) {
+      var u = rev(el.dataset.u || '');
+      var d = rev(el.dataset.d || '');
+      if (!u || !d) return '';
+      var addr = u + '\u0040' + d;
+      var href = 'mailto:' + addr;
+      var subject = el.dataset.subject;
+      var body = el.dataset.body;
+      var qs = [];
+      if (subject) qs.push('subject=' + encodeURIComponent(subject));
+      if (body) qs.push('body=' + body); // already percent-encoded
+      if (qs.length) href += '?' + qs.join('&');
+      return { href: href, addr: addr };
+    };
+    var reveal = function (el) {
+      if (el.dataset.revealed === '1') return;
+      var b = build(el);
+      if (!b) return;
+      el.dataset.revealed = '1';
+      el.setAttribute('href', b.href);
+      // Replace visible text ONLY if it's the placeholder — keep button/CTA labels intact
+      if (/^\s*\[\s*reveal email\s*\]\s*$/i.test(el.textContent)) {
+        el.textContent = b.addr;
+      }
+    };
+    links.forEach(function (el) {
+      ['mouseenter', 'focus', 'touchstart'].forEach(function (evt) {
+        el.addEventListener(evt, function () { reveal(el); }, { passive: true });
+      });
+      el.addEventListener('click', function (e) {
+        if (el.dataset.revealed !== '1') {
+          e.preventDefault();
+          reveal(el);
+          // follow through after revealing
+          setTimeout(function () { window.location.href = el.getAttribute('href'); }, 0);
+        }
+      });
+    });
+  })();
+</script>
+
+<script>
+  // ============ IMPRESSUM MODAL ============
+  (function () {
+    var overlay  = document.getElementById('impressum-modal');
+    var closeBtn = document.getElementById('impressum-close');
+    var triggers = document.querySelectorAll('[data-open-modal="impressum"]');
+    var rev = function (s) { return (s || '').split('').reverse().join(''); };
+    var esc = function (s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    };
+
+    function revealAddrs() {
+      overlay.querySelectorAll('.obf-addr').forEach(function (el) {
+        if (el.dataset.revealed === '1') return;
+        var l1 = rev(el.dataset.l1 || '');
+        var l2 = rev(el.dataset.l2 || '');
+        el.innerHTML = (l1 ? esc(l1) : '') + (l1 && l2 ? '<br>' : '') + (l2 ? esc(l2) : '');
+        el.dataset.revealed = '1';
+      });
+    }
+
+    function openModal() {
+      if (!overlay) return;
+      overlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      overlay.focus();
+      revealAddrs();
+      // Trigger email reveal for links inside modal (mouseenter fires the existing handler)
+      overlay.querySelectorAll('.email-lnk').forEach(function (el) {
+        el.dispatchEvent(new Event('mouseenter', { bubbles: true }));
+      });
+    }
+
+    function closeModal() {
+      if (!overlay) return;
+      overlay.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    triggers.forEach(function (t) {
+      t.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    if (overlay) {
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+      overlay.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    }
+  })();
+</script>
+
+</body>
+</html>
