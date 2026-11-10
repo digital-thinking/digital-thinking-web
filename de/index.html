@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>KI-Architektur-Review &amp; Technische Due Diligence | Christian Freischlag</title>
+    <meta name="description" content="Christian Freischlag, Machine Learning/AI Engineer. KI-Architektur- und Produktions-Reviews, technische Due Diligence, MLOps und Agentic-Engineering-Beratung. Karlsruhe, remote möglich."/>
+    <meta name="author" content="Christian Freischlag"/>
+
+    <link rel="canonical" href="https://digital-thinking.de/de/"/>
+    <link rel="alternate" hreflang="en" href="https://digital-thinking.de/"/>
+    <link rel="alternate" hreflang="de" href="https://digital-thinking.de/de/"/>
+    <link rel="alternate" hreflang="x-default" href="https://digital-thinking.de/"/>
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
+    <meta name="theme-color" content="#0a0a0a"/>
+
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://digital-thinking.de/de/"/>
+    <meta property="og:site_name" content="digital-thinking"/>
+    <meta property="og:title" content="Zuverlässige KI-Systeme für den Produktivbetrieb"/>
+    <meta property="og:description" content="KI-Architektur- und Produktions-Reviews, technische Due Diligence, MLOps und Agentic Engineering. Unabhängige Beratung von Christian Freischlag."/>
+    <meta property="og:locale" content="de_DE"/>
+    <meta property="og:locale:alternate" content="en_US"/>
+    <meta property="og:image" content="https://digital-thinking.de/assets/og-de.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="Christian Freischlag: zuverlässige KI-Systeme für den Produktivbetrieb"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+
+    <link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin/>
+    <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin/>
+    <link rel="stylesheet" href="/assets/site.css"/>
+    <script src="/assets/site.js" defer></script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "Person",
+                    "@id": "https://digital-thinking.de/#christian-freischlag",
+                    "name": "Christian Freischlag",
+                    "jobTitle": "Machine Learning Engineer & Berater",
+                    "url": "https://digital-thinking.de/de/",
+                    "knowsLanguage": ["de", "en"],
+                    "knowsAbout": [
+                        "Angewandte KI-Architektur",
+                        "MLOps",
+                        "Technische Due Diligence",
+                        "eCommerce-Suche",
+                        "Empfehlungssysteme",
+                        "Agentic Engineering"
+                    ],
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": "Karlsruhe",
+                        "addressCountry": "DE"
+                    },
+                    "sameAs": [
+                        "https://github.com/digital-thinking",
+                        "https://ixeption.substack.com",
+                        "https://medium.com/@christian.freischlag"
+                    ]
+                },
+                {
+                    "@type": "ProfessionalService",
+                    "@id": "https://digital-thinking.de/#practice",
+                    "name": "digital-thinking",
+                    "url": "https://digital-thinking.de/de/",
+                    "image": "https://digital-thinking.de/assets/og-de.png",
+                    "description": "Unabhängige Beratung von Christian Freischlag: KI-Architektur- und Produktions-Reviews, technische Due Diligence für KI, technische Beratung und Agentic-Engineering-Beratung.",
+                    "founder": {"@id": "https://digital-thinking.de/#christian-freischlag"},
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": "Karlsruhe",
+                        "addressCountry": "DE"
+                    },
+                    "availableLanguage": ["de", "en"],
+                    "serviceType": [
+                        "KI-Architektur- & Produktions-Review",
+                        "Technische Due Diligence für KI",
+                        "Technische Beratung",
+                        "Agentic-Engineering-Beratung"
+                    ]
+                }
+            ]
+        }
+    </script>
+</head>
+
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+
+<header class="top">
+    <div class="wrap top-in">
+        <a class="brand" href="/de/" aria-label="Christian Freischlag, digital-thinking: Startseite">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6 L9 12 L4 18" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 19 L20 19" stroke-linecap="round"/></svg>
+            Christian Freischlag <span>digital-thinking</span>
+        </a>
+        <nav class="nav" aria-label="Abschnitte">
+            <a href="#services">Leistungen</a>
+            <a href="#work">Erfahrung</a>
+            <a href="#process">Ablauf</a>
+            <a href="#writing">Artikel</a>
+        </nav>
+        <div class="top-end">
+            <a class="lang" href="/" hreflang="en" lang="en" data-setlang="en">English</a>
+            <a class="btn btn-small" href="#contact">Kontakt</a>
+        </div>
+    </div>
+</header>
+
+<main id="main">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+        <div class="wrap">
+            <h1>Zuverlässige KI&#8209;Systeme für den Produktivbetrieb.</h1>
+            <p class="tagline">KI-Architektur-Reviews · Technische Due Diligence · MLOps · Agentic Engineering</p>
+
+            <div class="hero-grid">
+                <div class="hero-intro">
+                    <img class="portrait" src="/assets/portrait.webp" width="480" height="480" alt="Porträt von Christian Freischlag"/>
+                    <p>Hi, ich bin <strong>Christian Freischlag</strong>, Machine Learning/AI Engineer mit über zehn Jahren Erfahrung. Ich unterstütze Startups dabei, KI vom Proof-of-Concept in den Produktionsbetrieb zu bringen, mit der Architektur, MLOps-Disziplin und Observability, die Traffic, Budgets und echten Fehlerfällen standhalten. Für Gründer, CTOs und Investoren schaue ich mir außerdem bestehende Systeme unabhängig an: Trägt das, skaliert das, und was sollte als Nächstes passieren?</p>
+                    <div class="hero-actions">
+                        <a class="btn" href="#contact" data-mail data-u="gnitlusnoc" data-d="ed.gnikniht-latigid" data-subject="Anfrage — digital-thinking">E-Mail schreiben</a>
+                        <a class="link" href="#services">Leistungen ansehen</a>
+                    </div>
+                    <p class="hero-note">Der erste Call ist ein kostenloses Gespräch. Rückmeldung in der Regel innerhalb von 48 Stunden.</p>
+                </div>
+
+                <figure class="fig">
+                    <figcaption><strong>Worauf ein Review schaut</strong> Die fünf Fragen, die ich am häufigsten höre, und wo im System die Antwort steckt.</figcaption>
+                    <svg viewBox="0 0 604 222" role="img" aria-label="Skizze eines KI-Systems: Daten, Retrieval, Modell und Serving in einer Reihe, darunter Evaluation und Monitoring sowie ein Rückweg zu den Daten. Fünf nummerierte Markierungen gehören zu den Fragen darunter.">
+                        <defs>
+                            <marker id="ah" viewBox="0 0 8 8" refX="7.2" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0.6 7.6 4 0 7.4z" fill="#858585"/></marker>
+                        </defs>
+                        <path class="flow" marker-end="url(#ah)" d="M130 50h36"/>
+                        <path class="flow" marker-end="url(#ah)" d="M282 50h36"/>
+                        <path class="flow" marker-end="url(#ah)" d="M434 50h36"/>
+                        <path class="flow" marker-end="url(#ah)" d="M224 78v50"/>
+                        <path class="flow" marker-end="url(#ah)" d="M376 78v50"/>
+                        <path class="flow" marker-end="url(#ah)" d="M528 78v50"/>
+                        <path class="flow back" marker-end="url(#ah)" d="M528 176v32H72V78"/>
+                        <g class="box n1"><rect x="14" y="22" width="116" height="56"/><text x="72" y="55">Daten</text></g>
+                        <g class="box"><rect x="166" y="22" width="116" height="56"/><text x="224" y="55">Retrieval</text></g>
+                        <g class="box n2"><rect x="318" y="22" width="116" height="56"/><text x="376" y="55">Modell</text></g>
+                        <g class="box n4"><rect x="470" y="22" width="116" height="56"/><text x="528" y="55">Serving</text></g>
+                        <g class="box n3"><rect x="166" y="128" width="268" height="48"/><text x="300" y="157">Evaluation</text></g>
+                        <g class="box n5"><rect x="470" y="128" width="116" height="48"/><text x="528" y="157">Monitoring</text></g>
+                        <g class="tag t1"><circle cx="130" cy="22" r="12"/><text x="130" y="26.5">1</text></g>
+                        <g class="tag t2"><circle cx="434" cy="22" r="12"/><text x="434" y="26.5">2</text></g>
+                        <g class="tag t3"><circle cx="434" cy="128" r="12"/><text x="434" y="132.5">3</text></g>
+                        <g class="tag t4"><circle cx="586" cy="22" r="12"/><text x="586" y="26.5">4</text></g>
+                        <g class="tag t5"><circle cx="586" cy="128" r="12"/><text x="586" y="132.5">5</text></g>
+                    </svg>
+                    <ol class="notes">
+                        <li><b>Daten</b> <span>Haben wir Daten, an die andere nicht einfach herankommen?</span></li>
+                        <li><b>Modell</b> <span>Eigene Technologie oder eine dünne Schicht über einem fremden Modell?</span></li>
+                        <li><b>Evaluation</b> <span>Woher wissen wir, dass eine Änderung es besser gemacht hat?</span></li>
+                        <li><b>Serving</b> <span>Was kostet ein Request, und was passiert bei 10x Traffic?</span></li>
+                        <li><b>Monitoring</b> <span>Wer merkt, wenn die Qualität nachlässt, und wie schnell?</span></li>
+                    </ol>
+                </figure>
+            </div>
+
+            <dl class="facts">
+                <div>
+                    <dt>Hintergrund</dt>
+                    <dd>Über zehn Jahre Software- und ML-Engineering. Lead ML Engineer bei Chrono24, danach Manager NLP &amp; KI bei KPMG.</dd>
+                </div>
+                <div>
+                    <dt>Heute</dt>
+                    <dd>Hauptjob: MLOps Engineer bei der Auction Technology Group. Beratung nebenher, mit begrenzter Kapazität.</dd>
+                </div>
+                <div>
+                    <dt>Für wen</dt>
+                    <dd>Gründungs-Engineers, CTOs und Product Leads. VCs und ihre Portfoliounternehmen.</dd>
+                </div>
+                <div>
+                    <dt>Wo</dt>
+                    <dd>Karlsruhe, DE. Remote möglich, auf Deutsch oder Englisch.</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
+
+    <!-- ================= LEISTUNGEN ================= -->
+    <section id="services" aria-labelledby="h-services">
+        <div class="wrap">
+            <div class="sec-grid">
+                <h2 class="sec-name" id="h-services">Leistungen</h2>
+                <div>
+                    <p class="lede">Wo ich wirklich helfen kann.</p>
+                    <p class="aside">Vier Formen der Zusammenarbeit, alle auf Basis von Dingen, die ich wiederholt in den Produktivbetrieb gebracht habe. Vorab klar abgegrenzt, zeitlich begrenzt und von mir persönlich gemacht.</p>
+
+                    <div class="sheets">
+                        <article class="sheet">
+                            <div class="sheet-head">
+                                <h3>KI-Architektur- &amp; Produktions-Review</h3>
+                                <span class="for">Für Gründer und CTOs</span>
+                            </div>
+                            <p class="sheet-sum">Ein unabhängiger Blick auf ein KI-/ML-System, das in Produktion ist oder kurz davor steht. Bleibt es unter Last und Budgetdruck stabil, sind die richtigen Bausteine gewählt (ML, LLMs, Embeddings, Retrieval, Agents), und was muss zuerst angegangen werden?</p>
+                            <div class="sheet-cols">
+                                <div>
+                                    <h4>Wann es sinnvoll ist</h4>
+                                    <ul class="fits">
+                                        <li>Der Prototyp hat alle überzeugt. Jetzt muss er echtem Traffic, echten Budgets und echten Fehlerfällen standhalten.</li>
+                                        <li>Qualität, Latenz oder Inferenzkosten laufen in die falsche Richtung, und niemand kann genau sagen, warum.</li>
+                                        <li>Ein größerer Ausbau, ein Plattformwechsel oder eine Schlüsseleinstellung steht an, und vorher soll eine zweite Meinung her.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4>Was ich mir anschaue</h4>
+                                    <ul class="scope">
+                                        <li>Architektur und Datenflüsse, vom Systementwurf bis zum Deployment</li>
+                                        <li>Evaluation: Wird Qualität wirklich gemessen (offline, A/B-Testing)?</li>
+                                        <li>Serving, Latenz und Kosten pro Request</li>
+                                        <li>Observability, Drift-Monitoring, Fehlerfälle</li>
+                                        <li>Reproduzierbarkeit, CI/CD, Tests, die etwas aussagen</li>
+                                        <li>Make or buy, und ob das Team das System betreiben kann</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="sheet-out">
+                                <div>
+                                    <h4>Was dabei herauskommt</h4>
+                                    <p><mark>Ein schriftlicher Bericht mit priorisierten Findings</mark> und ein Termin mit dem Team, um ihn durchzugehen. So konkret, dass die Engineers am nächsten Tag mit dem ersten Punkt anfangen können.</p>
+                                </div>
+                                <div>
+                                    <h4>Format</h4>
+                                    <p>In der Regel zwei bis drei Wochen in Teilzeit. Ich lese Code, Doku und Dashboards und spreche mit den Leuten, die das System bauen und betreiben.</p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="sheet">
+                            <div class="sheet-head">
+                                <h3>Technische Due Diligence für KI</h3>
+                                <span class="for">Für VCs und Investoren</span>
+                            </div>
+                            <p class="sheet-sum">Eine technische Bewertung eines Unternehmens, dessen Wert an seiner KI hängt. Hält die Technologie, was der Pitch verspricht, und was braucht es, um sie zu skalieren?</p>
+                            <div class="sheet-cols">
+                                <div>
+                                    <h4>Wann es sinnvoll ist</h4>
+                                    <ul class="fits">
+                                        <li>Die KI ist das Produkt, und es muss klar sein, wie viel Substanz dahintersteckt.</li>
+                                        <li>Eigene Technologie oder eine dünne Schicht über einem fremden Modell? Das sollte vor der Unterschrift geklärt sein.</li>
+                                        <li>Die KI-Roadmap eines Portfoliounternehmens verzögert sich immer wieder, und es fehlt eine unabhängige Sicht auf die Gründe.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4>Was ich mir anschaue</h4>
+                                    <ul class="scope">
+                                        <li>Was hinter den Aussagen steckt: Modelle, Daten, Evaluation</li>
+                                        <li>Verteidigbarkeit: was schwer zu kopieren ist und was nicht</li>
+                                        <li>Skalierbarkeit und Inferenzkosten pro Einheit</li>
+                                        <li>Engineering-Praxis und Tiefe des Teams</li>
+                                        <li>Abhängigkeiten und Risiken: Modellanbieter, OSS-Lizenzen, Security</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="sheet-out">
+                                <div>
+                                    <h4>Was dabei herauskommt</h4>
+                                    <p><mark>Ein kurzes Memo, das ein Investment Committee lesen kann:</mark> Findings, Red Flags, offene Fragen an die Gründer und eine klare Gesamteinschätzung. Mit realistischer Machbarkeitseinschätzung und klaren Ansagen, wenn der Pitch zu viel verspricht. Die technischen Details stehen im Anhang.</p>
+                                </div>
+                                <div>
+                                    <h4>Format</h4>
+                                    <p>Unter NDA, Zeitplan vorab vereinbart. Grundlage sind Unterlagen, Code-Zugang, wo möglich, und Gespräche mit dem technischen Team.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="sheets">
+                        <article class="sheet sheet-minor">
+                            <div class="sheet-head">
+                                <h3>Technische Beratung</h3>
+                                <span class="for">Für Gründungs-Engineers und CTOs</span>
+                            </div>
+                            <div class="sheet-cols">
+                                <div>
+                                    <p>Sparringspartner für ein paar Stunden im Monat. Meine Philosophie: Schnelles Prototyping für die Validierung, robuste Systeme für den Produktivbetrieb. Nimm das richtige Tool, nicht einfach das Vorhandene.</p>
+                                </div>
+                                <div>
+                                    <h4>Typische Themen</h4>
+                                    <ul class="scope">
+                                        <li>Architekturentscheidungen</li>
+                                        <li>Make or buy</li>
+                                        <li>Roadmap</li>
+                                        <li>Design-Reviews</li>
+                                        <li>Interviews mit den ML Engineers, die eingestellt werden sollen</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="sheet sheet-minor">
+                            <div class="sheet-head">
+                                <h3>Agentic-Engineering-Beratung</h3>
+                                <span class="for">Für Engineering-Teams</span>
+                            </div>
+                            <div class="sheet-cols">
+                                <div>
+                                    <p>Praxisnahe Beratung für Agentic Engineering aus persönlicher Überzeugung: Claude Code, Copilot &amp; Co. und deren Einbindung in die Entwicklungsprozesse, ohne Qualität zu opfern. Wenn die Implementierung schneller wird, staut sich alles davor und danach: bei Entscheidungen, Reviews und Freigaben. Deshalb geht es vor allem um das Drumherum. KI übernimmt langweilige Arbeit, aber der Entwickler sichert die Qualität und setzt die Leitplanken, damit kein Code entsteht, den im Team niemand mehr wirklich versteht.</p>
+                                </div>
+                                <div>
+                                    <h4>Das Drumherum</h4>
+                                    <ul class="scope">
+                                        <li>CI-Integration und automatisiertes PR-Review</li>
+                                        <li>CVE-Scanning und QA</li>
+                                        <li>Refactoring-Agents</li>
+                                        <li>Human-in-the-Loop: wer gibt was frei</li>
+                                        <li>Observability, die den Verifikations-Loop schließt. Ein Agent, der Logs lesen kann, ist um Welten besser als einer, der es nicht kann.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <p class="not"><b>Was ich nicht mache:</b> Vollzeit-Contracting oder ein ganzes Team mitbringen, das das Produkt baut. Wenn es das braucht, sage ich das im ersten Call und weiß meist, wen man fragen kann.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ERFAHRUNG ================= -->
+    <section id="work" aria-labelledby="h-work">
+        <div class="wrap">
+            <div class="sec-grid">
+                <h2 class="sec-name" id="h-work">Erfahrung</h2>
+                <div>
+                    <p class="lede">Meine Erfahrung.</p>
+                    <p class="aside">Was ich bisher gemacht habe und weiter mache, gebündelt nach Themen statt nach Stationen. Das stammt aus meinen Festanstellungen, nicht aus Kundenprojekten. Es steht hier als Hintergrund, nicht als Referenz oder Empfehlung dieser Unternehmen.</p>
+
+                    <div class="proof prose">
+                        <article class="proof-row">
+                            <h3>ML/AI-Projekte</h3>
+                            <div>
+                                <p>Von der Idee bis in den Produktivbetrieb. Zum Beispiel der <a href="https://www.chrono24.com/magazine/identify-watch-with-one-image-the-chrono24-watch-scanner-p_55081/" rel="noopener">Chrono24 Watch Scanner</a>: feinabgestimmte Bildklassifikationsmodelle (CNNs, TensorFlow) und eine dedizierte, autoskalierende AWS-Architektur, die im Peak 20.000+ Anfragen pro Tag über die App bediente. Oder ein NLP-basiertes End-to-End-Anti-Fraud-System (vor der LLM-Ära), das SVMs und Random Forests mit LSTMs und Transformern kombinierte, um Verhaltensmuster und sprachliche Signale gemeinsam auszuwerten. Und bei KPMG: LLM-Agent-gestütztes Bewerten von Ergebnissen der Dokumentenextraktion, um die Dunkelverarbeitungsquote zu steigern.</p>
+                                <p class="src">Chrono24 · KPMG</p>
+                            </div>
+                        </article>
+                        <article class="proof-row">
+                            <h3>ML-Plattform &amp; MLOps</h3>
+                            <div>
+                                <p>End-to-End-ML-Plattformen konzipiert und in Produktion gebracht: auf Docker, Airflow, Terraform und Snowflake und als containerisierte NLP-SaaS-Plattform (Python · .NET · Kubernetes · RabbitMQ). Mit allem, was dazugehört: Dependency-Management, Build-System, Umstellung auf Trunk-Based Development und entsprechende DevOps-Pipelines sowie eine Performance- und Skalierungs-Roadmap. ML-Plattform und MLOps verantworte ich auch in meinem aktuellen Job.</p>
+                                <p class="src">Chrono24 · KPMG · Auction Technology Group</p>
+                            </div>
+                        </article>
+                        <article class="proof-row">
+                            <h3>Suche, Empfehlungen &amp; GenAI</h3>
+                            <div>
+                                <p>Learning to Rank in Solr integriert, mit konsequentem NDCG-Benchmarking, um Suchrelevanz quantitativ zu belegen und gezielt zu verbessern. Empfehlungsarchitekturen von klassischem Collaborative Filtering über Embeddings bis zu Eigenentwicklungen (vorgestellt auf der Rework AI in London 2022). Interne Einführung von LLMs, OpenAI-APIs und Vector Search vorangetrieben, von experimentellen Prototypen bis hin zu produktiven GenAI-Anwendungsfällen.</p>
+                                <p class="src">Chrono24</p>
+                            </div>
+                        </article>
+                        <article class="proof-row">
+                            <h3>Betrieb &amp; Compliance</h3>
+                            <div>
+                                <p>Eskalations-Engineer für Produktionsstörungen, Root-Cause-Analysen und Post-Mortems. Verantwortlich für Enterprise-Compliance wie OSS-Lizenzen, CVE- und Vulnerability-Management auf dem Security-Niveau, das in einer Big-Four-Umgebung erwartet wird.</p>
+                                <p class="src">KPMG</p>
+                            </div>
+                        </article>
+                        <article class="proof-row">
+                            <h3>Hiring &amp; Führung</h3>
+                            <div>
+                                <p>Technischer Hiring-Lead und Mentor: Interviews, Onboarding und fachliche Weiterentwicklung von Machine-Learning- und Data-Engineering-Teams, bei Chrono24, bei KPMG und in meinem aktuellen Job. Cross-funktionales Team von 5 bis 10 über ML, Backend und DevOps hinweg technisch geführt.</p>
+                                <p class="src">Chrono24 · KPMG · Auction Technology Group</p>
+                            </div>
+                        </article>
+                        <article class="proof-row">
+                            <h3>Machbarkeit &amp; Strategie</h3>
+                            <div>
+                                <p>Technischer SME für NLP / ML / GenAI in strategischen Sales- und Management-Runden mit realistischer Machbarkeitseinschätzung bei Proposals und klaren Ansagen, wenn Kundenversprechen zu weit gingen. Die Geschäftsführung bei ML-Priorisierung und Themenauswahl entlang der Unternehmensziele beraten.</p>
+                                <p class="src">KPMG · Chrono24</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <h3 class="sub">Beratungsprojekte</h3>
+                    <p class="aside">Beratung, vertraulich.</p>
+                    <div class="proof">
+                        <article class="proof-row">
+                            <h3>US Luxury-eCommerce-Plattform</h3>
+                            <div>
+                                <p>Beratung der Founding-Engineers zu den KI-Grundlagen einer Luxury-eCommerce-Plattform (US). Mitgestaltung eines hierarchischen, empfehlungstauglichen Katalog- und Listing-Datenmodells, das langfristig trägt. Begleitung bei der Integration von Visual Embeddings ins Retrieval, damit die Plattform in einem stark ästhetischen Katalog ähnliche Produkte zuverlässig findet. Mit Fokus auf einen produktionsreifen, nachvollziehbaren ML-Stack.</p>
+                                <p class="src">Berater für angewandte KI-Architektur · 2025–2026</p>
+                            </div>
+                        </article>
+                        <article class="proof-row">
+                            <h3>Marktplatz, ClimateTech</h3>
+                            <div>
+                                <p>Beratung und KI-gestützte Implementierung.</p>
+                                <p class="src">Agentic Engineering und Software Architektur · 2025–2026</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="creds">
+                        <div>
+                            <h4>Stationen</h4>
+                            <p>Auction Technology Group (heute), KPMG, Chrono24, CERN</p>
+                        </div>
+                        <div>
+                            <h4>Ausbildung</h4>
+                            <p>M.Sc. Machine Learning (2016–2018) und B.Sc. Informatik (2011–2015), Karlsruhe University</p>
+                        </div>
+                        <div>
+                            <h4>Vorträge</h4>
+                            <p>„NLP-inspired deep recommender for out-of-catalog items“, RE•WORK AI Summit, London 2022</p>
+                        </div>
+                        <div>
+                            <h4>Zertifikate</h4>
+                            <p>Learning to Rank (2024) und Solr Search (2023), Opensource Connections</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ABLAUF ================= -->
+    <section id="process" aria-labelledby="h-process">
+        <div class="wrap">
+            <div class="sec-grid">
+                <h2 class="sec-name" id="h-process">Ablauf</h2>
+                <div>
+                    <p class="lede">So läuft ein Projekt ab.</p>
+
+                    <ol class="steps">
+                        <li>
+                            <h3>Erster Call</h3>
+                            <p>Ein kostenloses Gespräch, etwa 30 Minuten. Das Problem kommt auf den Tisch, und ich sage offen, ob ich der Richtige dafür bin.</p>
+                        </li>
+                        <li>
+                            <h3>Scope</h3>
+                            <p>Wir halten schriftlich fest, welche Fragen beantwortet werden sollen, welchen Zugang ich brauche, Zeitplan und Preis. Bevor die Arbeit losgeht.</p>
+                        </li>
+                        <li>
+                            <h3>Die Arbeit</h3>
+                            <p>Ich lese Code, Doku und Dashboards und spreche mit den Leuten, die das System bauen und betreiben.</p>
+                        </li>
+                        <li>
+                            <h3>Findings</h3>
+                            <p>Schriftlich, priorisiert und gemeinsam durchgegangen. Klar genug fürs Management, detailliert genug für die Engineers.</p>
+                        </li>
+                    </ol>
+
+                    <div class="terms">
+                        <div>
+                            <h3>Weiterhin Engineer</h3>
+                            <p>Ich bin Engineer und will es bleiben. Die Beratung läuft neben meinem Hauptjob: Teilzeit und nur wenige Projekte gleichzeitig, dafür Rat von jemandem, der solche Systeme jede Woche selbst baut und betreibt.</p>
+                        </div>
+                        <div>
+                            <h3>Unabhängig</h3>
+                            <p>Keine Agentur im Rücken, kein Folgeprojekt, das ich verkaufen muss. „Passt so, nichts ändern“ ist ein gültiges Ergebnis.</p>
+                        </div>
+                        <div>
+                            <h3>Vertraulich</h3>
+                            <p>NDA ist Standard. Projekte, die mit meinem Arbeitgeber in Konflikt stehen, nehme ich nicht an.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ARTIKEL ================= -->
+    <section id="writing" aria-labelledby="h-writing">
+        <div class="wrap">
+            <div class="sec-grid">
+                <h2 class="sec-name" id="h-writing">Artikel</h2>
+                <div>
+                    <p class="lede">Notizen aus der Praxis.</p>
+                    <p class="aside">Artikel zu angewandter KI, MLOps, eCommerce-Suche — und der Engineering-Arbeit dahinter. Auf Englisch.</p>
+
+                    <ul class="posts" lang="en">
+                        <li><a href="https://ixeption.substack.com/p/navigating-software-engineering-in" rel="noopener">
+                            <h3>Navigating software engineering in 2026</h3>
+                            <time datetime="2026-11" lang="de">Nov. 2026</time>
+                            <p>What changes, what stays, and how to stay ahead during the AI transition</p>
+                        </a></li>
+                        <li><a href="https://ixeption.substack.com/p/every-vector-database-benchmark-is" rel="noopener">
+                            <h3>Every vector database benchmark is wrong</h3>
+                            <time datetime="2026-09" lang="de">Sep. 2026</time>
+                            <p>A real-world vector database case study on real production data, real traffic and a real bill</p>
+                        </a></li>
+                        <li><a href="https://ixeption.substack.com/p/software-is-still-a-liability" rel="noopener">
+                            <h3>Software is still a liability</h3>
+                            <time datetime="2026-06" lang="de">Juni 2026</time>
+                            <p>How token-maxing and “roughly solved” problems are conflicting with 20 years of Agile, DevOps, and Product Management.</p>
+                        </a></li>
+                        <li><a href="https://ixeption.substack.com/p/cognitive-debt-how-ai-generated-code" rel="noopener">
+                            <h3>Cognitive Debt: How AI-Generated Code Introduces a More Dangerous Kind of Debt</h3>
+                            <time datetime="2026-04" lang="de">Apr. 2026</time>
+                            <p>AI Can Write Your Code. It Can’t Own Your System.</p>
+                        </a></li>
+                        <li><a href="https://ixeption.substack.com/p/agentic-engineering-the-good-the" rel="noopener">
+                            <h3>Agentic Engineering: The good, the bad, the ugly</h3>
+                            <time datetime="2026-03" lang="de">März 2026</time>
+                            <p>The “Vibe Coding Trap” and how to avoid building a huge unmaintainable mess</p>
+                        </a></li>
+                    </ul>
+                    <p class="posts-more prose">Mehr auf <a href="https://ixeption.substack.com" rel="noopener">Substack</a> und <a href="https://medium.com/@christian.freischlag" rel="noopener">Medium</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= KONTAKT ================= -->
+    <section class="contact" id="contact" aria-labelledby="h-contact">
+        <div class="wrap contact-grid">
+            <div>
+                <h2 id="h-contact">Das Problem in einem Absatz beschreiben.</h2>
+                <p class="contact-copy">Ich sage offen, ob ich der Richtige dafür bin — und falls nicht, wer es ist. Rückmeldung in der Regel innerhalb von 48 Stunden. Der erste Call ist ein kostenloses Gespräch.</p>
+            </div>
+            <div>
+                <div class="contact-person">
+                    <img src="/assets/portrait.webp" width="480" height="480" alt="" loading="lazy"/>
+                    <p><strong>Christian Freischlag</strong> <span>Machine Learning/AI Engineer</span></p>
+                </div>
+                <a class="mail" href="#contact" data-mail data-u="gnitlusnoc" data-d="ed.gnikniht-latigid" data-subject="Anfrage — digital-thinking"><span data-mail-text>E-Mail-Adresse anzeigen</span></a>
+                <div class="contact-actions">
+                    <a class="btn" href="#contact" data-mail data-u="gnitlusnoc" data-d="ed.gnikniht-latigid" data-subject="Anfrage — digital-thinking">E-Mail schreiben</a>
+                    <button class="btn btn-plain" type="button" data-copy data-done="Adresse kopiert" aria-live="polite" hidden>Adresse kopieren</button>
+                </div>
+                <div class="hints">
+                    <h3>Hilft, ist aber kein Muss</h3>
+                    <ul>
+                        <li>Der aktuelle Stack — und wo es weh tut</li>
+                        <li>Teamgröße &amp; interne ML-Kompetenz</li>
+                        <li>Was bisher versucht wurde</li>
+                    </ul>
+                </div>
+                <p class="elsewhere">
+                    <!-- TODO: hier das LinkedIn-Profil ergänzen, z. B.
+                    <a href="https://www.linkedin.com/in/YOUR-HANDLE/" rel="noopener me">LinkedIn</a> -->
+                    <a href="https://github.com/digital-thinking" rel="noopener me">GitHub</a>
+                    <a href="https://ixeption.substack.com" rel="noopener me">Substack</a>
+                    <a href="https://medium.com/@christian.freischlag" rel="noopener me">Medium</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="foot">
+    <div class="wrap">
+        <div class="foot-in">
+            <p>Unabhängige Beratung von Christian Freischlag. Angewandte KI-Architektur, MLOps und Agentic Engineering. Sitz in Karlsruhe, Deutschland.<br>no cookies · no trackers · static HTML</p>
+            <nav aria-label="Rechtliches">
+                <a href="/de/impressum/">Impressum</a>
+                <a href="/de/impressum/#datenschutz">Datenschutz</a>
+                <a href="/" hreflang="en" lang="en" data-setlang="en">English</a>
+            </nav>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
